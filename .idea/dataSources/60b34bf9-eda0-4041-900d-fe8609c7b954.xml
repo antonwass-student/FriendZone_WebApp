@@ -1,0 +1,52 @@
+<dataSource name="SQL Server (Microsoft) - community@communitylab.database.windows.net">
+  <database-model serializer="dbm" rdbms="MSSQL" format-version="2.6">
+    <database id="1" name="community">
+      <object-id>5</object-id>
+      <visible>1</visible>
+    </database>
+    <database id="2" name="master">
+      <object-id>1</object-id>
+    </database>
+    <schema id="3" parent="1" name="dbo">
+      <object-id>1</object-id>
+      <visible>1</visible>
+      <introspection-timestamp>2016-11-10.15:11:19.880</introspection-timestamp>
+    </schema>
+    <schema id="4" parent="1" name="guest">
+      <object-id>2</object-id>
+    </schema>
+    <schema id="5" parent="1" name="INFORMATION_SCHEMA">
+      <object-id>3</object-id>
+    </schema>
+    <schema id="6" parent="1" name="sys">
+      <object-id>4</object-id>
+    </schema>
+    <schema id="7" parent="1" name="db_owner">
+      <object-id>16384</object-id>
+    </schema>
+    <schema id="8" parent="1" name="db_accessadmin">
+      <object-id>16385</object-id>
+    </schema>
+    <schema id="9" parent="1" name="db_securityadmin">
+      <object-id>16386</object-id>
+    </schema>
+    <schema id="10" parent="1" name="db_ddladmin">
+      <object-id>16387</object-id>
+    </schema>
+    <schema id="11" parent="1" name="db_backupoperator">
+      <object-id>16389</object-id>
+    </schema>
+    <schema id="12" parent="1" name="db_datareader">
+      <object-id>16390</object-id>
+    </schema>
+    <schema id="13" parent="1" name="db_datawriter">
+      <object-id>16391</object-id>
+    </schema>
+    <schema id="14" parent="1" name="db_denydatareader">
+      <object-id>16392</object-id>
+    </schema>
+    <schema id="15" parent="1" name="db_denydatawriter">
+      <object-id>16393</object-id>
+    </schema>
+  </database-model>
+</dataSource>
