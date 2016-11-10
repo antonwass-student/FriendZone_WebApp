@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="entities.WallPostEntity">
+        <table name="WallPost" schema="dbo" catalog="community"/>
+        <attributes>
+            <id name="wallpostId">
+                <column name="wallpost_id" precision="-1"/>
+            </id>
+            <basic name="message">
+                <column name="message" nullable="false" length="512"/>
+            </basic>
+            <basic name="timestamp">
+                <column name="timestamp" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="picture">
+                <column name="picture" nullable="false" precision="-1"/>
+            </basic>
+            <basic name="author">
+                <column name="author" nullable="false" precision="-1"/>
+            </basic>
+            <many-to-one name="wallByWall" optional="true" target-entity="entities.WallEntity">
+                <join-column name="wall" referenced-column-name="wall_id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
-    <persistence-unit name="NewPersistenceUnit">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <persistence-unit name="persistanceUnit">
+        <mapping-file>entities/ConversationEntity.xml</mapping-file>
+        <mapping-file>entities/FriendRequestEntity.xml</mapping-file>
+        <mapping-file>entities/FriendshipEntity.xml</mapping-file>
+        <mapping-file>entities/MessageEntity.xml</mapping-file>
+        <mapping-file>entities/ProfileEntity.xml</mapping-file>
+        <mapping-file>entities/UserEntity.xml</mapping-file>
+        <mapping-file>entities/WallEntity.xml</mapping-file>
+        <mapping-file>entities/WallPostEntity.xml</mapping-file>
+        <class>entities.ConversationEntity</class>
+        <class>entities.FriendRequestEntity</class>
+        <class>entities.FriendshipEntity</class>
+        <class>entities.MessageEntity</class>
+        <class>entities.ProfileEntity</class>
+        <class>entities.UserEntity</class>
+        <class>entities.WallEntity</class>
+        <class>entities.WallPostEntity</class>
         <properties>
-            <property name="hibernate.connection.url" value=""/>
-            <property name="hibernate.connection.driver_class" value=""/>
-            <property name="hibernate.connection.username" value=""/>
-            <property name="hibernate.connection.password" value=""/>
-            <property name="hibernate.archive.autodetection" value="class"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
-            <property name="hbm2ddl.auto" value="update"/>
+            <property name="hibernate.connection.url"
+                      value="jdbc:sqlserver://communitylab.database.windows.net:1433;database=community;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;databaseName=community;"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
         </properties>
     </persistence-unit>
 </persistence>

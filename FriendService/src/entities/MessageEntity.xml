@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
+        version="2.0">
+
+    <entity class="entities.MessageEntity">
+        <table name="Message" schema="dbo" catalog="community"/>
+        <attributes>
+            <id name="messageId">
+                <column name="message_id" precision="-1"/>
+            </id>
+            <basic name="sender">
+                <column name="sender" precision="-1"/>
+            </basic>
+            <basic name="sent">
+                <column name="sent" precision="-1"/>
+            </basic>
+            <many-to-one name="conversationByReceiver" optional="true" target-entity="entities.ConversationEntity">
+                <join-column name="receiver" referenced-column-name="conversation_id"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>
