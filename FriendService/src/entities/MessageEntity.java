@@ -4,33 +4,34 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 @Entity
 @Table(name = "Message", schema = "dbo", catalog = "community")
 public class MessageEntity {
-    private Integer messageId;
-    private Integer sender;
+    private int messageId;
+    private int sender;
     private Timestamp sent;
     private ConversationEntity conversationByReceiver;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id", nullable = false)
-    public Integer getMessageId() {
+    public int getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(Integer messageId) {
+    public void setMessageId(int messageId) {
         this.messageId = messageId;
     }
 
     @Basic
     @Column(name = "sender", nullable = false)
-    public Integer getSender() {
+    public int getSender() {
         return sender;
     }
 
-    public void setSender(Integer sender) {
+    public void setSender(int sender) {
         this.sender = sender;
     }
 
@@ -51,8 +52,8 @@ public class MessageEntity {
 
         MessageEntity that = (MessageEntity) o;
 
-        if (messageId != null ? !messageId.equals(that.messageId) : that.messageId != null) return false;
-        if (sender != null ? !sender.equals(that.sender) : that.sender != null) return false;
+        if (messageId != that.messageId) return false;
+        if (sender != that.sender) return false;
         if (sent != null ? !sent.equals(that.sent) : that.sent != null) return false;
 
         return true;
@@ -60,8 +61,8 @@ public class MessageEntity {
 
     @Override
     public int hashCode() {
-        int result = messageId != null ? messageId.hashCode() : 0;
-        result = 31 * result + (sender != null ? sender.hashCode() : 0);
+        int result = messageId;
+        result = 31 * result + sender;
         result = 31 * result + (sent != null ? sent.hashCode() : 0);
         return result;
     }

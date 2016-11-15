@@ -5,25 +5,26 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 @Entity
 @Table(name = "WallPost", schema = "dbo", catalog = "community")
 public class WallPostEntity {
-    private Integer wallpostId;
+    private int wallpostId;
     private String message;
     private Timestamp timestamp;
     private byte[] picture;
-    private Integer author;
     private WallEntity wallByWall;
+    private UserEntity userByAuthor;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wallpost_id", nullable = false)
-    public Integer getWallpostId() {
+    public int getWallpostId() {
         return wallpostId;
     }
 
-    public void setWallpostId(Integer wallpostId) {
+    public void setWallpostId(int wallpostId) {
         this.wallpostId = wallpostId;
     }
 
@@ -57,16 +58,6 @@ public class WallPostEntity {
         this.picture = picture;
     }
 
-    @Basic
-    @Column(name = "author", nullable = true)
-    public Integer getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(Integer author) {
-        this.author = author;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -74,22 +65,20 @@ public class WallPostEntity {
 
         WallPostEntity that = (WallPostEntity) o;
 
-        if (wallpostId != null ? !wallpostId.equals(that.wallpostId) : that.wallpostId != null) return false;
+        if (wallpostId != that.wallpostId) return false;
         if (message != null ? !message.equals(that.message) : that.message != null) return false;
         if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null) return false;
         if (!Arrays.equals(picture, that.picture)) return false;
-        if (author != null ? !author.equals(that.author) : that.author != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = wallpostId != null ? wallpostId.hashCode() : 0;
+        int result = wallpostId;
         result = 31 * result + (message != null ? message.hashCode() : 0);
         result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(picture);
-        result = 31 * result + (author != null ? author.hashCode() : 0);
         return result;
     }
 
@@ -101,5 +90,15 @@ public class WallPostEntity {
 
     public void setWallByWall(WallEntity wallByWall) {
         this.wallByWall = wallByWall;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "author", referencedColumnName = "user_id")
+    public UserEntity getUserByAuthor() {
+        return userByAuthor;
+    }
+
+    public void setUserByAuthor(UserEntity userByAuthor) {
+        this.userByAuthor = userByAuthor;
     }
 }

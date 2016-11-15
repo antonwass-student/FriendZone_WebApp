@@ -3,21 +3,24 @@ package entities;
 import javax.persistence.*;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 @Entity
 @Table(name = "FriendRequest", schema = "dbo", catalog = "community")
 public class FriendRequestEntity {
-    private Integer friendRequestId;
+    private int friendRequestId;
     private String message;
+    private UserEntity userBySender;
+    private UserEntity userByReceiver;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "friendRequest_id", nullable = false)
-    public Integer getFriendRequestId() {
+    public int getFriendRequestId() {
         return friendRequestId;
     }
 
-    public void setFriendRequestId(Integer friendRequestId) {
+    public void setFriendRequestId(int friendRequestId) {
         this.friendRequestId = friendRequestId;
     }
 
@@ -38,8 +41,7 @@ public class FriendRequestEntity {
 
         FriendRequestEntity that = (FriendRequestEntity) o;
 
-        if (friendRequestId != null ? !friendRequestId.equals(that.friendRequestId) : that.friendRequestId != null)
-            return false;
+        if (friendRequestId != that.friendRequestId) return false;
         if (message != null ? !message.equals(that.message) : that.message != null) return false;
 
         return true;
@@ -47,8 +49,28 @@ public class FriendRequestEntity {
 
     @Override
     public int hashCode() {
-        int result = friendRequestId != null ? friendRequestId.hashCode() : 0;
+        int result = friendRequestId;
         result = 31 * result + (message != null ? message.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "sender", referencedColumnName = "user_id", nullable = false)
+    public UserEntity getUserBySender() {
+        return userBySender;
+    }
+
+    public void setUserBySender(UserEntity userBySender) {
+        this.userBySender = userBySender;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "receiver", referencedColumnName = "user_id")
+    public UserEntity getUserByReceiver() {
+        return userByReceiver;
+    }
+
+    public void setUserByReceiver(UserEntity userByReceiver) {
+        this.userByReceiver = userByReceiver;
     }
 }

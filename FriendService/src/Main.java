@@ -1,53 +1,27 @@
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.service.ServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import entities.UserEntity;
 
-import java.util.Map;
+import javax.persistence.*;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 public class Main {
-    private static final SessionFactory ourSessionFactory;
-    private static final ServiceRegistry serviceRegistry;
+    public static void main(String[] args){
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("persistenceUnit");
+        EntityManager entityManager = factory.createEntityManager();
 
-    static {
-        try {
-            Configuration configuration = new Configuration();
-            configuration.configure();
+        entityManager.getTransaction().begin();
 
-            serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-            ourSessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        } catch (Throwable ex) {
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
+        UserEntity user = new UserEntity();
 
-    public static Session getSession() throws HibernateException {
-        return ourSessionFactory.openSession();
-    }
+        user.setEmail("anton_wass@mail.com");
+        user.setName("Anton");
+        user.setPassword("1234");
+        user.setUserId(0);
 
-    public static void main(final String[] args) throws Exception {
-        final Session session = getSession();
-        try {
-            System.out.println("querying all the managed entities...");
-            final Map metadataMap = session.getSessionFactory().getAllClassMetadata();
-            for (Object key : metadataMap.keySet()) {
-                final ClassMetadata classMetadata = (ClassMetadata) metadataMap.get(key);
-                final String entityName = classMetadata.getEntityName();
-                final Query query = session.createQuery("from " + entityName);
-                System.out.println("executing: " + query.getQueryString());
-                for (Object o : query.list()) {
-                    System.out.println("  " + o);
-                }
-            }
-        } finally {
-            session.close();
-        }
+        entityManager.persist(user);
+
+        entityManager.getTransaction().commit();
+
     }
 }

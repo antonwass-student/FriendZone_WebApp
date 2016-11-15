@@ -1,23 +1,26 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 @Entity
 @Table(name = "Wall", schema = "dbo", catalog = "community")
 public class WallEntity {
-    private Integer wallId;
+    private int wallId;
     private UserEntity userByOwner;
+    private Collection<WallPostEntity> wallPostsByWallId;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "wall_id", nullable = false)
-    public Integer getWallId() {
+    public int getWallId() {
         return wallId;
     }
 
-    public void setWallId(Integer wallId) {
+    public void setWallId(int wallId) {
         this.wallId = wallId;
     }
 
@@ -28,14 +31,14 @@ public class WallEntity {
 
         WallEntity that = (WallEntity) o;
 
-        if (wallId != null ? !wallId.equals(that.wallId) : that.wallId != null) return false;
+        if (wallId != that.wallId) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return wallId != null ? wallId.hashCode() : 0;
+        return wallId;
     }
 
     @ManyToOne
@@ -46,5 +49,14 @@ public class WallEntity {
 
     public void setUserByOwner(UserEntity userByOwner) {
         this.userByOwner = userByOwner;
+    }
+
+    @OneToMany(mappedBy = "wallByWall")
+    public Collection<WallPostEntity> getWallPostsByWallId() {
+        return wallPostsByWallId;
+    }
+
+    public void setWallPostsByWallId(Collection<WallPostEntity> wallPostsByWallId) {
+        this.wallPostsByWallId = wallPostsByWallId;
     }
 }

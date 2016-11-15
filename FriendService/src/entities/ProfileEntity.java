@@ -5,23 +5,25 @@ import java.sql.Date;
 import java.util.Arrays;
 
 /**
- * Created by Anton on 2016-11-10.
+ * Created by Anton on 2016-11-15.
  */
 @Entity
 @Table(name = "Profile", schema = "dbo", catalog = "community")
 public class ProfileEntity {
-    private Integer profileId;
+    private int profileId;
     private Date birthday;
     private String description;
     private byte[] picture;
+    private UserEntity userByOwner;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "profile_id", nullable = false)
-    public Integer getProfileId() {
+    public int getProfileId() {
         return profileId;
     }
 
-    public void setProfileId(Integer profileId) {
+    public void setProfileId(int profileId) {
         this.profileId = profileId;
     }
 
@@ -62,7 +64,7 @@ public class ProfileEntity {
 
         ProfileEntity that = (ProfileEntity) o;
 
-        if (profileId != null ? !profileId.equals(that.profileId) : that.profileId != null) return false;
+        if (profileId != that.profileId) return false;
         if (birthday != null ? !birthday.equals(that.birthday) : that.birthday != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (!Arrays.equals(picture, that.picture)) return false;
@@ -72,10 +74,20 @@ public class ProfileEntity {
 
     @Override
     public int hashCode() {
-        int result = profileId != null ? profileId.hashCode() : 0;
+        int result = profileId;
         result = 31 * result + (birthday != null ? birthday.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + Arrays.hashCode(picture);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "owner", referencedColumnName = "user_id", nullable = false)
+    public UserEntity getUserByOwner() {
+        return userByOwner;
+    }
+
+    public void setUserByOwner(UserEntity userByOwner) {
+        this.userByOwner = userByOwner;
     }
 }
