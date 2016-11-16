@@ -1,7 +1,7 @@
 package main.java.rest;
 
+import bo.LoginBO;
 import main.java.entities.UserEntity;
-import models.bo.LoginBO;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -44,7 +44,7 @@ public class UserService {
     @Path("/login")
     @POST
     @Produces(MediaType.TEXT_PLAIN)
-    public String login(@QueryParam("credentials")LoginBO credentials){
+    public String login(@QueryParam("credentials") LoginBO credentials){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
         /*

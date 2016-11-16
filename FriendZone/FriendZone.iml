@@ -22,5 +22,6 @@
     <orderEntry type="library" name="Mojarra-2.2.1" level="project" />
     <orderEntry type="library" name="PrimeFaces-5.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M10" level="application_server_libraries" />
+    <orderEntry type="module" module-name="FriendZone.Models" />
   </component>
 </module>
