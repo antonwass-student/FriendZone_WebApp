@@ -50,5 +50,14 @@
     <orderEntry type="library" name="org.hibernate:hibernate-entitymanager:5.2.4.Final" level="project" />
     <orderEntry type="library" name="com.sun.jersey:jersey-bundle:1.19.3" level="project" />
     <orderEntry type="module" module-name="FriendZone.Models" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/sve/sqljdbc4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

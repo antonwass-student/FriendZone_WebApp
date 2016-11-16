@@ -9,33 +9,47 @@
 <h:head>
     <link rel="stylesheet" type="text/css" href="main.css"></link>
 </h:head>
+<h:body style="background-color: #e9ebee; text-align: center">
+    <f:view>
+        <h:form>
+            <p:growl id="messages"/>
 
-<h:body>
-    <div class="page_wrapper">
-
-    <h:form>
-        <p:panelGrid styleClass="panelGridCenter" columns="1">
-            <p:outputLabel>FriendZone</p:outputLabel>
-
-
-        </p:panelGrid>
-        <p:panelGrid styleClass="panelGridCenter" columns="2">
-
-            <p:outputLabel>Email:</p:outputLabel> <p:inputText id="in" value="#{login.email}"></p:inputText>
-
-            <p:outputLabel>Password:</p:outputLabel> <p:password value="#{login.password}"/>
+            <p:menubar>
+                <p:menuitem>
+                    <h:link outcome="/index.xhmtl">
+                        <h:graphicImage name="friendZone.png" height="25" />
+                    </h:link>
+                </p:menuitem>
 
 
+                <f:facet name="options">
+                    <p:inputText placeholder="Email" style="margin-right: 10px" id="in" value="#{login.email}"></p:inputText>
+                    <p:password placeholder="Password" style="margin-right: 10px" value="#{login.password}"/>
+                    <p:commandButton id="loginButton" value="Login" action="#{login.login()}"/>
+                </f:facet>
+            </p:menubar>
+        </h:form>
 
-        </p:panelGrid>
+    </f:view>
 
-        <p:panelGrid styleClass="panelGridCenter" columns="1">
+    <div class="page_wrapper_content">
+        <div style="align-content: center">
+            <div class="loginbox">
+                <h:graphicImage name="friendZone.png" />
+                <p>
+                    <p:inputText styleClass="radius" placeholder="First and Last name" style="margin-right: 10px" value=""></p:inputText>
+                    <p:inputText styleClass="radius" placeholder="Email" style="margin-right: 10px" value=""></p:inputText>
+                </p>
+                <p>
+                    <p:password styleClass="radius" placeholder="Password" style="margin-right: 10px" value="#"/>
+                    <p:password styleClass="radius" placeholder="Re-enter password" style="margin-right: 10px" value="#"/>
+                </p>
+                <p ><p:commandButton style="display: inline-block;" styleClass="radius" id="registerButton" value="Register for friendZone" action="#"/></p>
+            </div>
+        </div>
 
-            <p:commandButton id="loginKnapp" value="Login" action="#{login.login()}"/>
+    </div>
 
-        </p:panelGrid>
-    </h:form>
-</div>
 </h:body>
 
 </html>

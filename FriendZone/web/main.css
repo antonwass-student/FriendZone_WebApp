@@ -3,6 +3,13 @@
     width: 800px;
     margin: 0 auto;
 }
+
+.page_wrapper_content{
+    padding: 20px 0;
+    width: 1000px;
+    margin: 0 auto;
+}
+
 .panelGridCenter{
     margin: 0 auto;
     border: hidden;
@@ -11,4 +18,52 @@
 .panelGridCenter.ui-panelgrid td, .panelGridCenter.ui-panelgrid tr{
     border-style: none;
 }
+.postGrid{
+    border: hidden;
+}
 
+.postGrid.ui-panelgrid td, .postGrid.ui-panelgrid tr{
+    border-style: none;
+}
+
+.loginbox {
+    background: #FBFCFD;
+    padding: 10px;
+    width: 490px;
+    margin: 4% auto 0 auto;
+    position: relative;
+}
+.loginbox input.mini {
+    width: 195px;
+}
+.radius {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.postBox {
+    background: #ffffff;
+    padding: 10px;
+    width: 700px;
+    margin: 4% auto 0 auto;
+    position: relative;
+}
+
+.fb-profile img.fb-image-lg{
+    z-index: 0;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.fb-image-profile
+{
+    margin: -90px 10px 0px 50px;
+    z-index: 9;
+    width: 20%;
+}
+
+.profile-text{
+    margin: -135px 0px 0px 270px;
+
+}

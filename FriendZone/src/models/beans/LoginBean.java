@@ -7,6 +7,7 @@ import com.sun.faces.application.resource.ClientResourceInfo;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 
 import com.sun.jersey.api.client.Client;
@@ -15,6 +16,8 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+
+import java.io.IOException;
 
 /**
  * Created by Anton on 2016-11-16.
@@ -25,6 +28,15 @@ public class LoginBean {
     private String email;
     private String password;
     private int test;
+    private String loginStatus;
+
+    public String getLoginStatus() {
+        return loginStatus;
+    }
+
+    public void setLoginStatus(String loginStatus) {
+        this.loginStatus = loginStatus;
+    }
 
     public int getTest() {
         return test;
@@ -74,12 +86,23 @@ public class LoginBean {
 
         LoginResponseBO loginResp = response.getEntity(LoginResponseBO.class);
 
+        System.out.println("Recieved: " + loginResp.isLoggedIn());
 
+        if (loginResp.isLoggedIn()){
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            loginStatus = "Couldn't login.";
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
-        // Skicka iväg
-        System.out.println(loginResp.isLoggedIn());
-        // Få respons?
-
-        return "Inloggad";
+        return "";
     }
 }
