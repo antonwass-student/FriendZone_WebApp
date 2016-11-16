@@ -7,9 +7,14 @@ import com.sun.faces.application.resource.ClientResourceInfo;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.ws.rs.core.MediaType;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
 
 /**
  * Created by Anton on 2016-11-16.
@@ -53,14 +58,17 @@ public class LoginBean {
         user.setEmail(email);
         user.setPassword(password);
 
-        Client c = Client.create();
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+        Client c = Client.create(clientConfig);
 
         WebResource webResource = c.resource("http://localhost:8080/api/user/login");
 
-        ClientResponse response = webResource.type("application/json")
-                .post(ClientResponse.class,user);
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, user);
 
-        if (response.getStatus() != 201){
+        if (response.getStatus() != 200){
             System.out.println("Error " + response.getStatus());
         }
 

@@ -12,6 +12,7 @@
           <element id="library" level="project" name="Mojarra-2.2.1" />
           <element id="library" level="project" name="PrimeFaces-5.2" />
           <element id="library" level="project" name="Maven: org.primefaces.themes:bootstrap:1.0.10" />
+          <element id="library" level="project" name="com.sun.jersey:jersey-bundle:1.19.3" />
         </element>
       </element>
     </root>
