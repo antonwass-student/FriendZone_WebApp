@@ -1,14 +1,27 @@
 package models.beans;
 
 import bo.RegisterBO;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.json.JSONConfiguration;
+
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.ws.rs.core.MediaType;
+import java.io.IOException;
 
 /**
  * Created by chris on 2016-11-16.
  */
 @ManagedBean(name = "register")
+@SessionScoped
 public class RegisterBean {
+
     private String name;
     private String password;
     private String rePassword;
@@ -50,6 +63,7 @@ public class RegisterBean {
     }
 
     public void register(){
+
         if (!password.equals(rePassword) || name.length() < 3 || email.length() < 3 ){return;}
 
         RegisterBO user = new RegisterBO();
@@ -57,6 +71,35 @@ public class RegisterBean {
         user.setEmail(email);
         user.setPassword(password);
 
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+        Client c = Client.create(clientConfig);
+
+        WebResource webResource = c.resource("http://localhost:8080/api/user/register");
+
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
+                .post(ClientResponse.class, user);
+
+        if (response.getStatus() != 200){
+            System.out.println("HTTP code: " + response.getStatus());
+        }
+
+        String resp = response.getEntity(String.class);
+        System.out.println("response: " + resp.toString());
+        if (resp.equals("Registerd")){
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/profile.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/login.xhtml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
     }
 }

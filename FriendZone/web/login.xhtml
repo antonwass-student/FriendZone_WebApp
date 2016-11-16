@@ -36,15 +36,18 @@
         <div style="align-content: center">
             <div class="loginbox">
                 <h:graphicImage name="friendZone.png" />
-                <p>
-                    <p:inputText styleClass="radius" placeholder="First and Last name" style="margin-right: 10px" value=""></p:inputText>
-                    <p:inputText styleClass="radius" placeholder="Email" style="margin-right: 10px" value=""></p:inputText>
-                </p>
-                <p>
-                    <p:password styleClass="radius" placeholder="Password" style="margin-right: 10px" value="#"/>
-                    <p:password styleClass="radius" placeholder="Re-enter password" style="margin-right: 10px" value="#"/>
-                </p>
-                <p ><p:commandButton style="display: inline-block;" styleClass="radius" id="registerButton" value="Register for friendZone" action="#"/></p>
+                <h:form>
+                    <p>
+                        <p:inputText id="name" styleClass="radius" placeholder="First and Last name" style="margin-right: 10px" value="#{register.name}"></p:inputText>
+
+                        <p:inputText styleClass="radius" placeholder="Email" style="margin-right: 10px" value="#{register.email}"></p:inputText>
+                    </p>
+                    <p>
+                        <p:password styleClass="radius" placeholder="Password" style="margin-right: 10px" value="#{register.password}"/>
+                        <p:password styleClass="radius" placeholder="Re-enter password" style="margin-right: 10px" value="#{register.rePassword}"/>
+                    </p>
+                    <p ><p:commandButton style="display: inline-block;" styleClass="radius" id="registerButton" value="Register for friendZone" action="#{register.register()}"/></p>
+                </h:form>
             </div>
         </div>
 
