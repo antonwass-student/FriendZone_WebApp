@@ -49,5 +49,6 @@
     </orderEntry>
     <orderEntry type="library" name="org.hibernate:hibernate-entitymanager:5.2.4.Final" level="project" />
     <orderEntry type="library" name="com.sun.jersey:jersey-bundle:1.19.3" level="project" />
+    <orderEntry type="module" module-name="FriendZone" />
   </component>
 </module>
