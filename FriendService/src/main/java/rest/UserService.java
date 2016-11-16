@@ -49,6 +49,7 @@ public class UserService {
     public LoginResponseBO login(LoginBO credentials){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
         System.out.println("Entered login operation.");
+
         /*
         Query query = em.createQuery("SELECT u FROM UserEntity WHERE u.email == ?");
         query.setParameter(0, credentials.getUsername());
@@ -59,7 +60,6 @@ public class UserService {
         LoginResponseBO responseBO = new LoginResponseBO();
 
         responseBO.setLoggedIn(true);
-
 
         return responseBO;
     }
