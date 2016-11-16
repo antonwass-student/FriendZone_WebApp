@@ -1,0 +1,75 @@
+<component name="libraryTable">
+  <library name="com.sun.jersey:jersey-bundle:1.19.3" type="repository">
+    <properties maven-id="com.sun.jersey:jersey-bundle:1.19.3" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-bundle-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jsr311-api-1.1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-grizzly-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-servlet-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-server-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-core-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-client-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-atom-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/rome-0.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jdom-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-json-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jettison-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jaxb-impl-2.2.3-1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jaxb-api-2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/stax-api-1.0-2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/activation-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jackson-core-asl-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jackson-mapper-asl-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jackson-jaxrs-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jackson-xc-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-fastinfoset-1.19.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/FastInfoset-1.2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jsr173-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/persistence-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/mail-1.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/org.eclipse.persistence.moxy-2.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/org.eclipse.persistence.core-2.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/org.eclipse.persistence.asm-2.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/org.eclipse.persistence.antlr-2.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javax.servlet-api-3.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jsp-api-2.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/servlet-api-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javax.ejb-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javax.transaction-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javax.annotation-3.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/weld-osgi-bundle-1.1.4.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/cdi-api-1.0-SP4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jsr250-api-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javax.inject-1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/weld-api-1.1.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/weld-core-1.1.4.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/weld-spi-1.1.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javassist-3.14.0-GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/guava-r06.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jboss-interceptor-spi-2.0.0.CR1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jboss-interceptor-core-2.0.0.CR1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/slf4j-api-1.5.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/slf4j-ext-1.5.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/cal10n-api-0.7.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/weld-build-config-1.1.4.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/javassist-3.12.0.GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/ant-1.6.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-servlet-webserver-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-http-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-framework-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-utils-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-lzma-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-rcm-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-portunif-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/grizzly-http-servlet-1.9.45.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/http-20070405.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/stax-api-1.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/org.osgi.core-4.2.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/FriendService/lib/jersey-bundle-1.19.3-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>

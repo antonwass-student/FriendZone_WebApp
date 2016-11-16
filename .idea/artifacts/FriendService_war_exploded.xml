@@ -1,0 +1,21 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="FriendService:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/FriendService_war_exploded</output-path>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FriendService" />
+          <element id="jpa-descriptors" facet="FriendService/jpa/JPA" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="JPA 2.1-2.1" />
+          <element id="library" level="project" name="Hibernate 5.2.3-5.2.3" />
+          <element id="file-copy" path="C:/Program Files/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/enu/sqljdbc4.jar" />
+          <element id="library" level="project" name="org.hibernate:hibernate-entitymanager:5.2.4.Final" />
+          <element id="library" level="project" name="com.sun.jersey:jersey-bundle:1.19.3" />
+        </element>
+      </element>
+      <element id="javaee-facet-resources" facet="FriendService/web/Web" />
+    </root>
+  </artifact>
+</component>

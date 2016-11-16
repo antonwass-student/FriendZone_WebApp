@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
+
+    <persistence-unit name="persistenceUnit">
+        <class>main.java.entities.ConversationEntity</class>
+        <class>main.java.entities.FriendRequestEntity</class>
+        <class>main.java.entities.FriendshipEntity</class>
+        <class>main.java.entities.MessageEntity</class>
+        <class>main.java.entities.ProfileEntity</class>
+        <class>main.java.entities.UserEntity</class>
+        <class>main.java.entities.WallEntity</class>
+        <class>main.java.entities.WallPostEntity</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:sqlserver://communitylab.database.windows.net:1433;database=community;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;databaseName=community;"/>
+            <property name="hibernate.connection.driver_class" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <property name="hibernate.connection.username" value="admincommunity"/>
+            <property name="hibernate.connection.password" value="Antonchristian95"/>
+            <property name="hibernate.archive.autodetection" value="class"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+            <property name="hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
