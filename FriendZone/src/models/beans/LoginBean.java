@@ -90,7 +90,7 @@ public class LoginBean {
 
         if (loginResp.isLoggedIn()){
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/index.xhtml");
+                FacesContext.getCurrentInstance().getExternalContext().redirect("/stream.xhtml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
