@@ -1,6 +1,5 @@
 <component name="libraryTable">
-  <library name="org.hibernate:hibernate-entitymanager:5.2.4.Final" type="repository">
-    <properties maven-id="org.hibernate:hibernate-entitymanager:5.2.4.Final" />
+  <library name="org.hibernate:hibernate-entitymanager:5.2.4.Final">
     <CLASSES>
       <root url="jar://$PROJECT_DIR$/FriendService/lib/hibernate-entitymanager-5.2.4.Final.jar!/" />
       <root url="jar://$PROJECT_DIR$/FriendService/lib/jboss-logging-3.3.0.Final.jar!/" />

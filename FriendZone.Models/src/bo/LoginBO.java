@@ -8,6 +8,7 @@ public class LoginBO {
     private String password;
 
     public LoginBO(String arg){}
+    public LoginBO(){}
 
     public String getEmail() {
         return email;

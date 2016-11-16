@@ -1,0 +1,14 @@
+.page_wrapper{
+    padding: 100px 0;
+    width: 800px;
+    margin: 0 auto;
+}
+.panelGridCenter{
+    margin: 0 auto;
+    border: hidden;
+}
+
+.panelGridCenter.ui-panelgrid td, .panelGridCenter.ui-panelgrid tr{
+    border-style: none;
+}
+

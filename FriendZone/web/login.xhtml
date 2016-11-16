@@ -4,15 +4,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <link rel="stylesheet" type="text/css" href="main.css"></link>
+</h:head>
+
+<h:body>
+    <div class="page_wrapper">
+
     <h:form>
-        Username: <h:inputText id="in" value="#{LoginBean.username}"></h:inputText>
-        <br/>
-        Password:<h:inputSecret value="#{LoginBean.password}"/>
-        <br/>
-        <h:commandButton id="loginKnapp" value="Login" action="#{LoginBean.login}"/>
+        <p:panelGrid styleClass="panelGridCenter" columns="1">
+            <p:outputLabel>FriendZone</p:outputLabel>
+
+
+        </p:panelGrid>
+        <p:panelGrid styleClass="panelGridCenter" columns="2">
+
+            <p:outputLabel>Email:</p:outputLabel> <p:inputText id="in" value="#{login.email}"></p:inputText>
+
+            <p:outputLabel>Password:</p:outputLabel> <p:password value="#{login.password}"/>
+
+
+
+        </p:panelGrid>
+
+        <p:panelGrid styleClass="panelGridCenter" columns="1">
+
+            <p:commandButton id="loginKnapp" value="Login" action="#{login.login()}"/>
+
+        </p:panelGrid>
     </h:form>
-</f:view>
+</div>
+</h:body>
 
 </html>
