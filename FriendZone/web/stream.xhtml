@@ -37,6 +37,20 @@
 
     <div class="page_wrapper_content">
     <p:outputLabel value="Feed" />
+
+        <div class="postBox" style="margin-bottom: 20px">
+            <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                <p:graphicImage name="margot.jpeg" height="45" width="45" />
+                <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="" />
+            </p:panelGrid>
+            <p:separator />
+            <div style="text-align: right;">
+                <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" />
+            </div>
+        </div>
+
+
+
         <div class="postBox">
             <div>
                 <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
