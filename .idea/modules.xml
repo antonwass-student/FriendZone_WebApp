@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/FriendService/FriendService.iml" filepath="$PROJECT_DIR$/FriendService/FriendService.iml" />
       <module fileurl="file://$PROJECT_DIR$/FriendZone/FriendZone.iml" filepath="$PROJECT_DIR$/FriendZone/FriendZone.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FriendZone.Models/FriendZone.Models.iml" filepath="$PROJECT_DIR$/FriendZone.Models/FriendZone.Models.iml" />
     </modules>
   </component>
 </project>

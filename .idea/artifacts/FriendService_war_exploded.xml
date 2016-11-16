@@ -6,6 +6,7 @@
         <element id="directory" name="classes">
           <element id="module-output" name="FriendService" />
           <element id="jpa-descriptors" facet="FriendService/jpa/JPA" />
+          <element id="module-output" name="FriendZone.Models" />
         </element>
         <element id="directory" name="lib">
           <element id="library" level="project" name="JPA 2.1-2.1" />
