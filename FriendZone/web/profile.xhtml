@@ -40,13 +40,19 @@
         <div class="container">
             <div class="fb-profile">
                 <h:graphicImage  styleClass="fb-image-lg" name="cover.jpg" alt="Profile image example"/>
-                <h:graphicImage align="left" styleClass="fb-image-profile thumbnail" name="margot.jpeg" alt="Profile image example"/>
+                <h:graphicImage align="left" styleClass="fb-image-profile thumbnail" name="profile.png" alt="Profile image example"/>
 
                 <div class="profile-text">
-                    <h3><p:outputLabel  value="Margot Robbie" /></h3>
-                    <p><p:outputLabel value="Girls just wanna go fun."/></p>
+                    <h3><p:outputLabel  value="#{profile.name}" /></h3>
+                    <p><p:outputLabel value="#{profile.email}"/></p>
+                    <h:form>
+                        <p:commandButton type="button" value="Add as friend" icon="fa fa-plus" />
+                    </h:form>
                 </div>
             </div>
+        </div>
+        <div>
+
         </div>
 
 
