@@ -5,6 +5,7 @@ package bo;
  */
 public class FriendRequestBO {
 
+    private int id;
     private UserSmallBO sender;
     private UserSmallBO receiver;
     private String message;
@@ -34,5 +35,13 @@ public class FriendRequestBO {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

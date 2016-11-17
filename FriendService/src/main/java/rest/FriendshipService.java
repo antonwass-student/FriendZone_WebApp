@@ -1,16 +1,20 @@
 package main.java.rest;
 
+import bo.FriendRequestDecisionBO;
 import bo.FriendRequestBO;
 import bo.UserSmallBO;
 import main.java.entities.FriendRequestEntity;
+import main.java.entities.FriendshipEntity;
 import main.java.entities.UserEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -68,7 +72,8 @@ public class FriendshipService {
     }
 
     @Path("/request/send")
-    @Consumes()
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
     public String sendFriendRequest(FriendRequestBO invitation){
         try{
 
@@ -95,7 +100,53 @@ public class FriendshipService {
             e.printStackTrace();
             return "Server error. Could not fulfill request.";
         }
+    }
 
+
+    @Path("/request/decision")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String acceptFriendRequest(FriendRequestDecisionBO decision){
+        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+
+        try{
+            if(decision.isDecision() == false){
+                //remove the friendrequest.
+
+                em.getTransaction().begin();
+
+                FriendRequestEntity fre = em.find(FriendRequestEntity.class, decision.getRequest().getId());
+
+                em.remove(fre);
+
+                em.getTransaction().commit();
+
+                return "Friendrequest declined and removed.";
+
+            }else{
+                //create friendship
+                em.getTransaction().begin();
+                FriendshipEntity friendshipEntity = new FriendshipEntity();
+
+                UserEntity receiver = em.find(UserEntity.class, decision.getRequest().getReceiver().getId());
+                UserEntity sender = em.find(UserEntity.class, decision.getRequest().getSender().getId());
+
+                friendshipEntity.setUserByReceiver(receiver);
+                friendshipEntity.setUserByInviter(sender);
+
+                em.persist(friendshipEntity); //create friendship
+
+                FriendRequestEntity fre = em.find(FriendRequestEntity.class, decision.getRequest().getId());
+                em.remove(fre);     //remove request
+
+                em.getTransaction().commit();
+                return "New friendship created!";
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("Could not handle friendship request. Server error.");
+            return null;
+        }
     }
 
 }
