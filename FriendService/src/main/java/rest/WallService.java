@@ -78,7 +78,7 @@ public class WallService {
         }
     }
 
-    @Path("/post")
+    @Path("/new")
     @POST
     public String addWall(String userId){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
@@ -104,6 +104,44 @@ public class WallService {
             System.out.println("Could not find user.");
             return "Could not find user.";
         }
+    }
 
+    @Path("/post")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String addPostToWall(WallPostBO newPost){
+        try{
+            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+
+            WallPostEntity wallPostEntity = new WallPostEntity();
+
+            wallPostEntity.setMessage(newPost.getMessage());
+            wallPostEntity.setPicture(newPost.getPicture());
+
+
+            UserEntity author = em.find(UserEntity.class, newPost.getAuthor().getId());
+
+            wallPostEntity.setUserByAuthor(author);
+            wallPostEntity.setWallByWall(author.getWallsByUserId().iterator().next());
+
+            em.getTransaction().begin();
+            em.persist(wallPostEntity);
+            em.getTransaction().commit();
+            System.out.println("Post added to wall.");
+            return "Successfully added post to wall!";
+
+        }catch(Exception e){
+            System.out.println("Could not add post to wall.");
+            e.printStackTrace();
+            return "Could not add post to wall. Server error.";
+        }
     }
 }
+
+
+
+
+
+
+
+
