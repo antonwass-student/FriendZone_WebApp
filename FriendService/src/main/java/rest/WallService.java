@@ -23,6 +23,7 @@ public class WallService {
 
     @Path("/get")
     @GET
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public WallBO getWallByUser(String userId){
 

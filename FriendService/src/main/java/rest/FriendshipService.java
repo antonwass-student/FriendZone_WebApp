@@ -9,10 +9,7 @@ import main.java.entities.UserEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -25,6 +22,8 @@ import java.util.Collection;
 public class FriendshipService {
 
     @Path("/request/get")
+    @GET
+    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<FriendRequestBO> getAllIncommingRequestsForUser(String userId){
         try{
