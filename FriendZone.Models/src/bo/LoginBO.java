@@ -6,6 +6,7 @@ package bo;
 public class LoginBO {
     private String email;
     private String password;
+    private String session_id;
 
     public LoginBO(String arg){}
     public LoginBO(){}
@@ -24,5 +25,13 @@ public class LoginBO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getSession_id() {
+        return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+        this.session_id = session_id;
     }
 }

@@ -30,6 +30,7 @@ public class LoginBean {
     private int test;
     private String loginStatus;
 
+
     public String getLoginStatus() {
         return loginStatus;
     }
@@ -69,6 +70,7 @@ public class LoginBean {
         LoginBO user = new LoginBO();
         user.setEmail(email);
         user.setPassword(password);
+        user.setSession_id(FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
 
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
