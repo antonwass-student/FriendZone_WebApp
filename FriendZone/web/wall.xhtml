@@ -42,11 +42,13 @@
         <div class="postBox" style="padding-bottom: 20px">
             <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
                 <p:graphicImage name="margot.jpeg" height="45" width="45" />
-                <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="" />
+                <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" />
             </p:panelGrid>
             <p:separator />
             <div style="text-align: right;">
-                <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" />
+                <h:form>
+                    <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" action="#{post.post()}" />
+                </h:form>
             </div>
         </div>
 

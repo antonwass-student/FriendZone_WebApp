@@ -104,6 +104,5 @@ public class WallService {
             System.out.println("Could not find user.");
             return "Could not find user.";
         }
-
     }
 }

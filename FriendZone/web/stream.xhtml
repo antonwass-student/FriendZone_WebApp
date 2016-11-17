@@ -27,7 +27,10 @@
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
 
                 <f:facet name="options">
-                    <p:inputText style="margin-right:10px" placeholder="Search"/>
+                    <p:autoComplete style="margin-right:10px" placeholder="Search" value="">
+
+                    </p:autoComplete>
+
                     <p:commandButton type="button" value="Logout" icon="fa fa-sign-out" />
                 </f:facet>
             </p:menubar>
@@ -36,7 +39,8 @@
     </f:view>
 
     <div class="page_wrapper_content">
-    <p:outputLabel value="Feed" />
+
+        <p:outputLabel value="Feed" />
 
         <div class="postBox" style="margin-bottom: 20px">
             <p:panelGrid styleClass="postGrid" style="background: none" columns="2">

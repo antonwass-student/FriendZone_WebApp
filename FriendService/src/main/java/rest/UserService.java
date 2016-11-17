@@ -1,9 +1,6 @@
 package main.java.rest;
 
-import bo.LoginBO;
-import bo.LoginResponseBO;
-import bo.RegisterBO;
-import bo.UserSmallBO;
+import bo.*;
 import main.java.entities.UserEntity;
 
 import javax.persistence.EntityManager;
@@ -12,9 +9,11 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
 import java.util.Collection;
-import org.hibernate.Session;
-import org.hibernate.cfg.Configuration;
+
+import main.java.entities.WallEntity;
+import main.java.entities.WallPostEntity;
 
 /**
  * Created by Anton on 2016-11-15.
@@ -34,11 +33,11 @@ public class UserService {
         return user;
     }
 
-    @Path("/get/session")
+    @Path("/get/session/{session_id}")
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public UserSmallBO getUserBySession(String id){
+    public UserSmallBO getUserBySession(@PathParam("session_id") String id){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
         TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid",
@@ -63,15 +62,22 @@ public class UserService {
 
     @Path("/get/all")
     @GET
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<UserEntity> getUsers(){
+    public Collection<UserSmallBO> getUsers(){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
         Query query = em.createQuery("SELECT u FROM UserEntity u");
         Collection<UserEntity> users = query.getResultList();
+        Collection<UserSmallBO> usrs = new ArrayList<>();
 
-        //business object
+        for (UserEntity a: users) {
+            UserSmallBO u = new UserSmallBO();
+            u.setId(a.getUserId());
+            u.setName(a.getName());
+            usrs.add(u);
+        }
 
-        return users;
+        return usrs;
     }
 
     @Path("/login")
@@ -139,6 +145,9 @@ public class UserService {
 
         return "Registered";
     }
+
+
+
 }
 
 
