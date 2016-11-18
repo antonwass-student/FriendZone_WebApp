@@ -1,5 +1,7 @@
 package main.java.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
@@ -41,6 +43,7 @@ public class WallPostEntity {
 
     @Basic
     @Column(name = "timestamp", nullable = true)
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     public Date getTimestamp() {
         return timestamp;
