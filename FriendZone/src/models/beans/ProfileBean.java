@@ -2,6 +2,8 @@ package models.beans;
 
 import bo.UserSmallBO;
 import bo.WallBO;
+import bo.WallPostBO;
+import bo.WallPostNewBO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -13,8 +15,11 @@ import javafx.event.ActionEvent;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by chris on 2016-11-17.
@@ -27,12 +32,20 @@ public class ProfileBean {
     private int id;
     private WallBO wall;
     private int wallId;
+    private Collection<WallPostBO> posts;
 
 
-    @ManagedProperty(value = "#{param.userId}")
     private String userId;
 
     public ProfileBean() {
+        Map<String,String> params =
+                FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+        userId = params.get("userId");
+        System.out.println(userId);
+        if (userId == null) {getMe();}
+        else{id = Integer.valueOf(userId);}
+        getProfile();
+        getWall();
     }
 
     public String getName() {
@@ -79,6 +92,14 @@ public class ProfileBean {
         this.wallId = wallId;
     }
 
+    public Collection<WallPostBO> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Collection<WallPostBO> posts) {
+        this.posts = posts;
+    }
+
     public void getProfile(){
 
 
@@ -98,6 +119,7 @@ public class ProfileBean {
             this.name = user.getName();
             this.email = user.getMail();
             this.id = user.getId();
+
         }
     }
 
@@ -106,13 +128,27 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource("http://localhost:8080/api/wall/"+id);
+        WebResource webResource = c.resource("http://localhost:8080/api/wall/get/"+id);
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
         this.wall = response.getEntity(WallBO.class);
         wallId = wall.getId();
+        posts = wall.getPosts();
 
+    }
+
+    public void getMe(){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+        Client c = Client.create(clientConfig);
+        WebResource webResource = c.resource("http://localhost:8080/api/user/get/session/"+FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
+
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+
+        UserSmallBO user = response.getEntity(UserSmallBO.class);
+        id = user.getId();
     }
 
     public void attributeListener(javax.faces.event.ActionEvent event){

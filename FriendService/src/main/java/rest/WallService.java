@@ -3,6 +3,7 @@ package main.java.rest;
 import bo.UserSmallBO;
 import bo.WallBO;
 import bo.WallPostBO;
+import bo.WallPostNewBO;
 import main.java.entities.UserEntity;
 import main.java.entities.WallEntity;
 import main.java.entities.WallPostEntity;
@@ -21,17 +22,17 @@ import java.util.Collection;
 @Path("/wall")
 public class WallService {
 
-    @Path("/get")
+    @Path("/get/{id}")
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
-    public WallBO getWallByUser(String userId){
+    public WallBO getWallByUser(@PathParam("id") int userId){
 
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
         TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE userId = :uid",
                 UserEntity.class);
 
+        query.setParameter("uid",userId);
         try{
 
             UserEntity user = query.getSingleResult();
@@ -74,6 +75,7 @@ public class WallService {
             return wall;
 
         }catch(Exception e){
+            System.out.println(e.getMessage());
             System.out.println("Could not find user");
             return null;
         }
@@ -110,20 +112,26 @@ public class WallService {
     @Path("/post")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String addPostToWall(WallPostBO newPost){
+    public String addPostToWall(WallPostNewBO newPost){
         try{
             EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
             WallPostEntity wallPostEntity = new WallPostEntity();
-
             wallPostEntity.setMessage(newPost.getMessage());
             wallPostEntity.setPicture(newPost.getPicture());
 
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid",
+                    UserEntity.class);
 
-            UserEntity author = em.find(UserEntity.class, newPost.getAuthor().getId());
+            query.setParameter("sid", newPost.getAuthorSessionId());
+
+            UserEntity author = query.getSingleResult();
 
             wallPostEntity.setUserByAuthor(author);
-            wallPostEntity.setWallByWall(author.getWallsByUserId().iterator().next());
+            WallEntity we = em.find(WallEntity.class,newPost.getWallId());
+            we.setWallId(newPost.getWallId());
+            wallPostEntity.setWallByWall(we);
+
 
             em.getTransaction().begin();
             em.persist(wallPostEntity);

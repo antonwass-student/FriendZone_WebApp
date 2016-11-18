@@ -91,11 +91,7 @@ public class LoginBean {
         System.out.println("Recieved: " + loginResp.isLoggedIn());
 
         if (loginResp.isLoggedIn()){
-            try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/stream.xhtml");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+                return "stream.xhtml";
         }else{
             loginStatus = "Couldn't login.";
             try {

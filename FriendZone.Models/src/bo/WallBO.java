@@ -10,6 +10,12 @@ public class WallBO {
     private UserSmallBO owner;
     private Collection<WallPostBO> posts;
 
+    public WallBO() {
+    }
+    public WallBO(String args) {
+    }
+
+
     public int getId() {
         return id;
     }

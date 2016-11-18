@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
     <link rel="stylesheet" type="text/css" href="main.css"/>
 </h:head>
@@ -55,34 +55,36 @@
         <div class="postBox" style="padding-bottom: 20px">
             <h:form>
                 <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="margot.jpeg" height="45" width="45" />
+                    <p:graphicImage name="profile.png" height="45" width="45" />
                     <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" >
                         <f:validateLength minimum="1" maximum="512" />
                     </p:inputText>
                 </p:panelGrid>
                 <p:separator />
                 <div style="text-align: right;">
-
+                    #{profile.wallId}
                     <p:commandButton  value="Skicka" icon="fa fa-paper-plane" action="#{post.post(profile.wallId)}" />
 
                 </div>
             </h:form>
         </div>
 
-        <div class="postBox">
-            <div>
-                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="margot.jpeg" height="45" width="45" />
-                    <p:link value="#{profile.name}" outcome="profile">
-                        <f:param name="userId" value="#{profile.id}" />
-                    </p:link>
-                </p:panelGrid>
-                <p:separator />
+        <c:forEach items="#{profile.posts}" var="post">
+            <div class="postBox">
+                <div>
+                    <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                        <p:graphicImage name="profile.png" height="45" width="45" />
+                        <p:link value="#{profile.name}" outcome="profile">
+                            <f:param name="userId" value="#{profile.id}" />
+                        </p:link>
+                    </p:panelGrid>
+                    <p:separator />
+                </div>
+                <div>
+                    <p:outputLabel value="#{post.message}" />
+                </div>
             </div>
-            <div>
-                <p:outputLabel value="Hej, mitt namn är Margot Robbie!" />
-            </div>
-        </div>
+        </c:forEach>
     </div>
 
 </h:body>

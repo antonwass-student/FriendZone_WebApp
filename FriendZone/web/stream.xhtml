@@ -43,14 +43,16 @@
         <p:outputLabel value="Feed" />
 
         <div class="postBox" style="margin-bottom: 20px">
-            <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                <p:graphicImage name="margot.jpeg" height="45" width="45" />
-                <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="" />
-            </p:panelGrid>
-            <p:separator />
-            <div style="text-align: right;">
-                <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" />
-            </div>
+            <h:form>
+                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                    <p:graphicImage name="profile.png" height="45" width="45" />
+                    <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" />
+                </p:panelGrid>
+                <p:separator />
+                <div style="text-align: right;">
+                    <p:commandButton  value="Skicka" icon="fa fa-paper-plane"  action="#{post.post()}"/>
+                </div>
+            </h:form>
         </div>
 
 
@@ -59,7 +61,9 @@
             <div>
                 <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
                     <p:graphicImage name="margot.jpeg" height="45" width="45" />
-                    <p:outputLabel value="Margot Robbie" />
+                    <p:link value="Margot Robbie" outcome="profile">
+                        <f:param name="userId" value="#{profile.id}" />
+                    </p:link>
                 </p:panelGrid>
                 <p:separator />
             </div>
@@ -67,44 +71,7 @@
                 <p:outputLabel value="Hej, mitt namn är Margot Robbie!" />
             </div>
         </div>
-        <div class="postBox">
-            <div>
-                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="meganfox.jpg" height="45" width="45" />
-                    <p:outputLabel value="Megan Fox" />
-                </p:panelGrid>
-                <p:separator />
-            </div>
-            <div>
-                <p:outputLabel value="Hej, idag åt jag tre pepparkakor, pliz like!" />
-            </div>
-        </div>
 
-        <div class="postBox">
-            <div>
-                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="margot.jpeg" height="45" width="45" />
-                    <p:outputLabel value="Margot Robbie" />
-                </p:panelGrid>
-                <p:separator />
-            </div>
-            <div>
-                <p:outputLabel value="Torsdag imorgon!!!" />
-            </div>
-        </div>
-
-        <div class="postBox">
-            <div>
-                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="meganfox.jpg" height="45" width="45" />
-                    <p:outputLabel value="Megan Fox" />
-                </p:panelGrid>
-                <p:separator />
-            </div>
-            <div>
-                <p:outputLabel value="hihihihihihihihihihiihihih" />
-            </div>
-        </div>
 
     </div>
 
