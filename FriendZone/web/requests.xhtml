@@ -26,6 +26,7 @@
 
 
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
+                <p:menuitem value="Requests" icon="fa fa-search" outcome="/requests.xhtml" />
                 <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
 
 
@@ -39,20 +40,7 @@
     </f:view>
 
     <div class="page_wrapper_content">
-        <h:form>
-            <p:inputText value="#{users.name}" valueChangeListener="#{users.getBySearchInput}" placeholder="Search people..." style="margin-bottom: 10px">
-                <p:ajax event="keyup"  update="results" ></p:ajax>
-            </p:inputText>
-            <br/>
 
-        <p:dataTable id="results" value="#{users.result}" var="usr" border="1">
-            <p:column>
-                <p:link outcome="profile" value="#{usr.name}">
-                    <f:param name="userId" value="#{usr.id}"></f:param>
-                </p:link>
-            </p:column>
-        </p:dataTable>
-    </h:form>
 
 
     </div>

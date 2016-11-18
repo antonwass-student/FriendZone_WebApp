@@ -26,6 +26,8 @@
 
 
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
+                <p:menuitem value="Requests" icon="fa fa-search" outcome="/requests.xhtml" />
+                <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
 
 
                 <f:facet name="options">
@@ -74,8 +76,8 @@
                 <div>
                     <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
                         <p:graphicImage name="profile.png" height="45" width="45" />
-                        <p:link value="#{profile.name}" outcome="profile">
-                            <f:param name="userId" value="#{profile.id}" />
+                        <p:link value="#{post.author.name}" outcome="profile">
+                            <f:param name="userId" value="#{post.author.id}" />
                         </p:link>
                     </p:panelGrid>
                     <p:separator />

@@ -25,6 +25,8 @@
 
 
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
+                <p:menuitem value="Requests" icon="fa fa-search" outcome="/requests.xhtml" />
+                <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
 
                 <f:facet name="options">
                     <p:autoComplete style="margin-right:10px" placeholder="Search" value="">
@@ -50,7 +52,7 @@
                 </p:panelGrid>
                 <p:separator />
                 <div style="text-align: right;">
-                    <p:commandButton  value="Skicka" icon="fa fa-paper-plane"  action="#{post.post()}"/>
+                    <p:commandButton  value="Skicka" icon="fa fa-paper-plane"  action="#{post.post(profile.wallId)}"/>
                 </div>
             </h:form>
         </div>
