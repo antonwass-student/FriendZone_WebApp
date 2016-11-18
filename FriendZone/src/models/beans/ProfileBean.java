@@ -149,7 +149,7 @@ public class ProfileBean {
     }
 
     public void attributeListener(javax.faces.event.ActionEvent event){
-        id = (Integer)event.getComponent().getAttributes().get("userId");
+         id = (Integer)event.getComponent().getAttributes().get("userId");
         getProfile();
         getWall();
     }

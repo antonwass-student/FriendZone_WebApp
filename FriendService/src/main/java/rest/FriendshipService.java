@@ -23,10 +23,10 @@ import java.util.Collection;
 @Path("/friend")
 public class FriendshipService {
 
-    @Path("/request/get")
+    @Path("/request/get/{session_id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<FriendRequestBO> getAllIncommingRequestsForUser(String user_session_id){
+    public Collection<FriendRequestBO> getAllIncommingRequestsForUser(@PathParam("session_id") String user_session_id){
         try{
             EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
@@ -45,6 +45,7 @@ public class FriendshipService {
             for(FriendRequestEntity fe : requests){
                 FriendRequestBO req = new FriendRequestBO();
                 req.setMessage(fe.getMessage());
+                req.setId(fe.getFriendRequestId());
 
                 //persistence objects
                 UserEntity senderEntity = fe.getUserBySender();
@@ -58,9 +59,9 @@ public class FriendshipService {
                 sender.setId(senderEntity.getUserId());
                 sender.setName(senderEntity.getName());
 
-                sender.setMail(receiverEntity.getEmail());
-                sender.setName(receiverEntity.getName());
-                sender.setId(receiverEntity.getUserId());
+                receiver.setMail(receiverEntity.getEmail());
+                receiver.setName(receiverEntity.getName());
+                receiver.setId(receiverEntity.getUserId());
 
                 req.setReceiver(receiver);
                 req.setSender(sender);
@@ -114,6 +115,7 @@ public class FriendshipService {
     @Path("/request/decision")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
     public String acceptFriendRequest(FriendRequestDecisionBO decision){
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
@@ -137,8 +139,8 @@ public class FriendshipService {
                 FriendshipEntity friendshipEntity = new FriendshipEntity();
 
                 FriendRequestEntity friendRequest = em.find(FriendRequestEntity.class, decision.getRequest_id());
-                UserEntity receiver = em.find(UserEntity.class, friendRequest.getUserByReceiver());
-                UserEntity sender = em.find(UserEntity.class, friendRequest.getUserBySender());
+                UserEntity receiver = friendRequest.getUserByReceiver();
+                UserEntity sender = friendRequest.getUserBySender();
 
                 friendshipEntity.setUserByReceiver(receiver);
                 friendshipEntity.setUserByInviter(sender);
