@@ -59,5 +59,6 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.sun.jersey:jersey-json:1.19.3" level="project" />
   </component>
 </module>

@@ -21,16 +21,20 @@ import main.java.entities.WallPostEntity;
 @Path("/user")
 public class UserService {
 
-    @Path("/get/one")
+    @Path("/get/{id}")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public UserEntity getUser(@QueryParam("id")int id){
+    public UserSmallBO getUser(@PathParam("id")int id){
 
         EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
         UserEntity user = em.find(UserEntity.class, id);
+        UserSmallBO u = new UserSmallBO();
+        u.setName(user.getName());
+        u.setMail(user.getEmail());
+        u.setId(user.getUserId());
 
-        return user;
+        return u;
     }
 
     @Path("/get/session/{session_id}")

@@ -23,7 +23,6 @@ public class FriendshipService {
 
     @Path("/request/get")
     @GET
-    @Consumes(MediaType.TEXT_PLAIN)
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<FriendRequestBO> getAllIncommingRequestsForUser(String userId){
         try{

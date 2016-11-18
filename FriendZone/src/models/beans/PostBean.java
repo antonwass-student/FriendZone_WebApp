@@ -2,6 +2,7 @@ package models.beans;
 
 import bo.UserSmallBO;
 import bo.WallPostBO;
+import bo.WallPostNewBO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -41,25 +42,25 @@ public class PostBean
         this.picture = picture;
     }
 
-    public void post(){
+    public void post(int wallId){
+        if (message.length() < 1) return;
+
+        System.out.println("Trying to post...");
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client c = Client.create(clientConfig);
 
 
         String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource("http://localhost:8080/api/user/get/session/"+sessionId);
-        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
-        UserSmallBO author = new UserSmallBO();
-        author = response.getEntity(UserSmallBO.class);
-        System.out.println("HTTP: " + response.getStatus());
 
-        webResource = c.resource("http://localhost:8080/api/wall/post");
-        WallPostBO post = new WallPostBO();
+        WebResource webResource = c.resource("http://localhost:8080/api/wall/post");
+        WallPostNewBO post = new WallPostNewBO();
         post.setMessage(message);
         post.setPicture(picture);
-        post.setAuthor(author);
-        response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
+        post.setWallId(wallId);
+        post.setAuthorSessionId(sessionId);
+
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, post);
 
         System.out.println("HTTP: " + response.getStatus());

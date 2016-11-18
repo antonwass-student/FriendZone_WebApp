@@ -40,16 +40,18 @@
         <p:outputLabel value="My wall" />
 
         <div class="postBox" style="padding-bottom: 20px">
+        <h:form>
             <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
                 <p:graphicImage name="margot.jpeg" height="45" width="45" />
                 <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" />
             </p:panelGrid>
             <p:separator />
             <div style="text-align: right;">
-                <h:form>
-                    <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" action="#{post.post()}" />
-                </h:form>
+
+                    <p:commandButton  type="button" value="Skicka" icon="fa fa-paper-plane" action="#{post.post}" />
+
             </div>
+        </h:form>
         </div>
 
         <div class="postBox">
@@ -57,6 +59,9 @@
                 <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
                     <p:graphicImage name="margot.jpeg" height="45" width="45" />
                     <p:outputLabel value="Margot Robbie" />
+                    <p:link value="Margot Robbie" outcome="profile">
+                        <f:param name="userID" value="#{u.id}" />
+                    </p:link>
                 </p:panelGrid>
                 <p:separator />
             </div>
