@@ -3,6 +3,7 @@ package main.java.entities;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * Created by Anton on 2016-11-15.
@@ -12,7 +13,7 @@ import java.util.Arrays;
 public class WallPostEntity {
     private int wallpostId;
     private String message;
-    private Timestamp timestamp;
+    private Date timestamp;
     private byte[] picture;
     private WallEntity wallByWall;
     private UserEntity userByAuthor;
@@ -40,11 +41,12 @@ public class WallPostEntity {
 
     @Basic
     @Column(name = "timestamp", nullable = true)
-    public Timestamp getTimestamp() {
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 

@@ -2,6 +2,7 @@ package main.java.rest;
 
 import bo.FriendRequestDecisionBO;
 import bo.FriendRequestBO;
+import bo.FriendRequestNewBO;
 import bo.UserSmallBO;
 import main.java.entities.FriendRequestEntity;
 import main.java.entities.FriendshipEntity;
@@ -9,6 +10,7 @@ import main.java.entities.UserEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.sql.Timestamp;
@@ -24,10 +26,16 @@ public class FriendshipService {
     @Path("/request/get")
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Collection<FriendRequestBO> getAllIncommingRequestsForUser(String userId){
+    public Collection<FriendRequestBO> getAllIncommingRequestsForUser(String user_session_id){
         try{
             EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
-            UserEntity user = em.find(UserEntity.class, Integer.parseInt(userId));
+
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
+
+            query.setParameter("sid", user_session_id);
+
+            UserEntity user = query.getSingleResult();
+
 
             //getFriendRequestsByUserId_0 = receiver
             Collection<FriendRequestEntity> requests = user.getFriendRequestsByUserId_0();
@@ -72,15 +80,17 @@ public class FriendshipService {
     @Path("/request/send")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public String sendFriendRequest(FriendRequestBO invitation){
+    public String sendFriendRequest(FriendRequestNewBO invitation){
         try{
 
             EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
 
             FriendRequestEntity request = new FriendRequestEntity();
 
-            UserEntity sender = em.find(UserEntity.class, invitation.getSender().getId());
-            UserEntity receiver = em.find(UserEntity.class, invitation.getReceiver().getId());
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
+            query.setParameter("sid", invitation.getSender_sid());
+            UserEntity sender = query.getSingleResult();
+            UserEntity receiver = em.find(UserEntity.class, invitation.getReceiver_user_id());
 
             request.setMessage(invitation.getMessage());
             request.setUserByReceiver(receiver);
@@ -113,7 +123,7 @@ public class FriendshipService {
 
                 em.getTransaction().begin();
 
-                FriendRequestEntity fre = em.find(FriendRequestEntity.class, decision.getRequest().getId());
+                FriendRequestEntity fre = em.find(FriendRequestEntity.class, decision.getRequest_id());
 
                 em.remove(fre);
 
@@ -126,16 +136,16 @@ public class FriendshipService {
                 em.getTransaction().begin();
                 FriendshipEntity friendshipEntity = new FriendshipEntity();
 
-                UserEntity receiver = em.find(UserEntity.class, decision.getRequest().getReceiver().getId());
-                UserEntity sender = em.find(UserEntity.class, decision.getRequest().getSender().getId());
+                FriendRequestEntity friendRequest = em.find(FriendRequestEntity.class, decision.getRequest_id());
+                UserEntity receiver = em.find(UserEntity.class, friendRequest.getUserByReceiver());
+                UserEntity sender = em.find(UserEntity.class, friendRequest.getUserBySender());
 
                 friendshipEntity.setUserByReceiver(receiver);
                 friendshipEntity.setUserByInviter(sender);
 
                 em.persist(friendshipEntity); //create friendship
 
-                FriendRequestEntity fre = em.find(FriendRequestEntity.class, decision.getRequest().getId());
-                em.remove(fre);     //remove request
+                em.remove(friendRequest);     //remove request
 
                 em.getTransaction().commit();
                 return "New friendship created!";

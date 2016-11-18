@@ -12,10 +12,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 import javafx.event.ActionEvent;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.*;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
@@ -25,7 +22,7 @@ import java.util.Map;
  * Created by chris on 2016-11-17.
  */
 @ManagedBean(name = "profile")
-@RequestScoped
+@ViewScoped
 public class ProfileBean {
     private String name;
     private String email;
@@ -152,7 +149,7 @@ public class ProfileBean {
     }
 
     public void attributeListener(javax.faces.event.ActionEvent event){
-         id = (Integer)event.getComponent().getAttributes().get("userId");
+        id = (Integer)event.getComponent().getAttributes().get("userId");
         getProfile();
         getWall();
     }

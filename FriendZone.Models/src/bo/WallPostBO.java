@@ -1,6 +1,6 @@
 package bo;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Anton on 2016-11-17.
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class WallPostBO {
     private int id;
     private String message;
-    private Timestamp timestamp;
+    private Date timestamp;
     private UserSmallBO author;
     private byte[] picture; //??
 
@@ -32,11 +32,11 @@ public class WallPostBO {
         this.message = message;
     }
 
-    public Timestamp getTimestamp() {
+    public Date getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
 
