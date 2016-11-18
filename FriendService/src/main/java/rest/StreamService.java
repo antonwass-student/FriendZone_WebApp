@@ -48,12 +48,12 @@ public class StreamService {
         CriteriaQuery<WallPostEntity> cq = cb.createQuery(WallPostEntity.class);
         Root<WallPostEntity> root = cq.from(WallPostEntity.class);
 
-        Expression<UserEntity> exp = root.get("author");
+        Expression<UserEntity> exp = root.get("userByAuthor");
 
         Predicate predicate = exp.in(friends);
 
         cq.where(predicate);
-
+        cq.orderBy(cb.asc(root.get("timestamp")));
         //create query with criteria
 
         TypedQuery<WallPostEntity> postQuery = em.createQuery(cq);
