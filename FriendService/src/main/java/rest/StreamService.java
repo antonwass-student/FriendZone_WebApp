@@ -16,9 +16,7 @@ import javax.persistence.criteria.*;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by Anton on 2016-11-18.
@@ -81,6 +79,16 @@ public class StreamService {
 
             postBOs.add(wp);
         }
+
+
+        // Vi borde göra orderby i frågorna till db ist.
+        Collections.sort(postBOs, new Comparator<WallPostBO>(){
+            @Override
+            public int compare(WallPostBO p1, WallPostBO p2){
+                return p2.getTimestamp().compareTo(p1.getTimestamp());
+            }
+        });
+
 
         response.setPosts(postBOs);
 

@@ -13,8 +13,7 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 /**
  * Created by Anton on 2016-11-17.
@@ -47,7 +46,7 @@ public class WallService {
 
             WallEntity wallEntity = walls.iterator().next();
 
-            Collection<WallPostBO> posts = new ArrayList<>();
+            List<WallPostBO> posts = new ArrayList<>();
 
             for(WallPostEntity wpe : wallEntity.getWallPostsByWallId()){
                 WallPostBO post = new WallPostBO();
@@ -64,8 +63,16 @@ public class WallService {
 
                 post.setAuthor(author);
 
+
                 posts.add(post);
             }
+
+            Collections.sort(posts, new Comparator<WallPostBO>(){
+                @Override
+                public int compare(WallPostBO p1, WallPostBO p2){
+                    return p2.getTimestamp().compareTo(p1.getTimestamp());
+                }
+            });
 
             wall.setId(wallEntity.getWallId());
             wall.setPosts(posts);

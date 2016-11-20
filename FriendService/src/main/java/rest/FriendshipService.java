@@ -1,9 +1,6 @@
 package main.java.rest;
 
-import bo.FriendRequestDecisionBO;
-import bo.FriendRequestBO;
-import bo.FriendRequestNewBO;
-import bo.UserSmallBO;
+import bo.*;
 import main.java.entities.FriendRequestEntity;
 import main.java.entities.FriendshipEntity;
 import main.java.entities.UserEntity;
@@ -22,6 +19,38 @@ import java.util.Collection;
  */
 @Path("/friend")
 public class FriendshipService {
+
+    @Path("/friends/get/{session_id}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Collection<UserSmallBO> getFriendsFrom(@PathParam("session_id")String id){
+        try{
+            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
+            query.setParameter("sid", id);
+            UserEntity user = query.getSingleResult();
+            Collection<UserSmallBO> friends = new ArrayList<>();
+            Collection<FriendshipEntity> friendships = user.getFriendshipsByUserId();
+            for(FriendshipEntity fe : friendships){
+                UserSmallBO u = new UserSmallBO();
+                if (user.getUserId() == fe.getUserByInviter().getUserId()){
+                    u.setId(fe.getUserByReceiver().getUserId());
+                    u.setName(fe.getUserByReceiver().getName());
+                    u.setMail(fe.getUserByReceiver().getEmail());
+
+                }else{
+                    u.setId(fe.getUserByInviter().getUserId());
+                    u.setName(fe.getUserByInviter().getName());
+                    u.setMail(fe.getUserByInviter().getEmail());
+                }
+
+                friends.add(u);
+            }
+            return friends;
+        }catch(Exception e){
+            return null;
+        }
+    }
 
     @Path("/request/get/{session_id}")
     @GET

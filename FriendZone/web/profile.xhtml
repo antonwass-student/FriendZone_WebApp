@@ -25,6 +25,7 @@
 
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
                 <p:menuitem value="Requests" icon="fa fa-users" outcome="/requests.xhtml" />
+                <p:menuitem value="Friends" icon="fa fa-users" outcome="/friends.xhtml" />
                 <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
 
 
@@ -38,55 +39,56 @@
     </f:view>
 
     <div class="page_wrapper_content">
-            <div class="container">
-                <div class="fb-profile">
-                    <h:graphicImage  styleClass="fb-image-lg" name="cover.jpg" alt="Profile image example"/>
-                    <h:graphicImage align="left" styleClass="fb-image-profile thumbnail" name="profile.png" alt="Profile image example"/>
+        <div class="container">
+            <div class="fb-profile">
+                <h:graphicImage  styleClass="fb-image-lg" name="cover.jpg" alt="Profile image example"/>
+                <h:graphicImage align="left" styleClass="fb-image-profile thumbnail" name="profile.png" alt="Profile image example"/>
 
-                    <div class="profile-text">
-                        <h3><p:outputLabel  value="#{profile.name}" /></h3>
-                        <p><p:outputLabel value="#{profile.email}"/></p>
-                        <h:form>
-                            <p:commandButton value="Add as friend" icon="fa fa-plus" action="#{req.sendRequestTo(profile.id)}" />
-                        </h:form>
-                    </div>
+                <div class="profile-text">
+                    <h3><p:outputLabel  value="#{profile.name}" /></h3>
+                    <p><p:outputLabel value="#{profile.email}"/></p>
+                    <h:form>
+                        <p:commandButton value="Add as friend" icon="fa fa-plus" action="#{req.sendRequestTo(profile.id)}" />
+                    </h:form>
                 </div>
             </div>
-        <div class="postBox" style="padding-bottom: 20px">
-            <h:form>
-                <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                    <p:graphicImage name="profile.png" height="45" width="45" />
-                    <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" >
-                        <f:validateLength minimum="1" maximum="512" />
-                    </p:inputText>
-                </p:panelGrid>
-                <p:separator />
-                <div style="text-align: right;">
-                    <p:commandButton  value="Skicka" icon="fa fa-paper-plane" action="#{post.post(profile.wallId)}" />
-
-                </div>
-            </h:form>
         </div>
 
-        <c:forEach items="#{profile.posts}" var="post">
-            <div class="postBox">
-                <div>
-                    <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
-                        <p:graphicImage name="profile.png" height="45" width="45" />
-                        <p:panelGrid columns="1">
-                            <p:link value="#{post.author.name}" outcome="profile">
-                                <f:param name="userId" value="#{post.author.id}" />
-                            </p:link>
-                            <p:outputLabel value="#{post.timestamp}"/>
+                <div class="postBox" style="padding-bottom: 20px">
+                    <h:form>
+                        <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                            <p:graphicImage name="profile.png" height="45" width="45" />
+                            <p:inputText style="border-style: none" placeholder="Vad gör du just nu?" value="#{post.message}" >
+                                <f:validateLength minimum="1" maximum="512" />
+                            </p:inputText>
                         </p:panelGrid>
-                    </p:panelGrid>
-                    <p:separator />
+                        <p:separator />
+                        <div style="text-align: right;">
+                            <p:commandButton  value="Skicka" icon="fa fa-paper-plane" action="#{post.post(profile.wallId)}" />
+
+                        </div>
+                    </h:form>
                 </div>
-                <div>
-                    <p:outputLabel value="#{post.message}" />
-                </div>
-            </div>
-        </c:forEach>
+
+                <c:forEach items="#{profile.posts}" var="post">
+                    <div class="postBox">
+                        <div>
+                            <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                                <p:graphicImage name="profile.png" height="45" width="45" />
+                                <p:panelGrid columns="1">
+                                    <p:link value="#{post.author.name}" outcome="profile">
+                                        <f:param name="userId" value="#{post.author.id}" />
+                                    </p:link>
+                                    <p:outputLabel value="#{post.timestamp}"/>
+                                </p:panelGrid>
+                            </p:panelGrid>
+                            <p:separator />
+                        </div>
+                        <div>
+                            <p:outputLabel value="#{post.message}" />
+                        </div>
+                    </div>
+                </c:forEach>
     </div>
 
 </h:body>

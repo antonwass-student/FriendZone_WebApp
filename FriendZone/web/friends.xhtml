@@ -40,21 +40,15 @@
     </f:view>
 
     <div class="page_wrapper_content">
-        <h:form>
-            <p:inputText value="#{users.name}" valueChangeListener="#{users.getBySearchInput}" placeholder="Search people..." style="margin-bottom: 10px">
-                <p:ajax event="keyup"  update="results" ></p:ajax>
-            </p:inputText>
-            <br/>
+        <p:outputLabel for="results" value="#{friends.noOfFriends} friend(s) found"></p:outputLabel>
+        <p:dataTable id="results" value="#{friends.friends}" var="fr" border="1">
 
-        <p:dataTable id="results" value="#{users.result}" var="usr" border="1">
             <p:column>
-                <p:link outcome="profile" value="#{usr.name}">
-                    <f:param name="userId" value="#{usr.id}"></f:param>
+                <p:link value="#{fr.name}" outcome="profile">
+                    <f:param name="userId" value="#{fr.id}" />
                 </p:link>
             </p:column>
         </p:dataTable>
-    </h:form>
-
 
     </div>
 

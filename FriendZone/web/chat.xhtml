@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <link rel="stylesheet" type="text/css" href="main.css"/>
+</h:head>
+<h:body style="background-color: #e9ebee">
+    <f:view>
+        <h:form>
+            <p:growl id="messages"/>
+
+            <p:menubar>
+                <p:menuitem>
+                    <h:link outcome="/stream.xhmtl">
+                        <h:graphicImage name="friendZone.png" height="25" />
+                    </h:link>
+                </p:menuitem>
+
+
+
+                <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
+                <p:menuitem value="Requests" icon="fa fa-users" outcome="/requests.xhtml" />
+                <p:menuitem value="Friends" icon="fa fa-users" outcome="/friends.xhtml" />
+                <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
+
+
+                <f:facet name="options">
+                    <p:inputText style="margin-right:10px" placeholder="Search"/>
+                    <p:commandButton type="button" value="Logout" icon="fa fa-sign-out" />
+                </f:facet>
+            </p:menubar>
+        </h:form>
+
+    </f:view>
+
+    <div class="page_wrapper_content">
+
+        <p:panelGrid style="width: 600px;height: auto" styleClass="panelGridCenter" columns="2">
+                <p:row>
+                    <div style="text-align: left">
+                        <p:panelGrid styleClass="" columns="1">
+                            <div >
+                                <p:link value="Namn 1" />
+                            </div>
+
+                            <div >
+                                <p:link value="Namn 2" />
+                            </div>
+                            <div >
+                                <p:link value="Namn 3" />
+                            </div>
+                            <div >
+                                <p:link value="Namn 4" />
+                            </div>
+                        </p:panelGrid>
+                    </div>
+                </p:row>
+
+                <p:row>
+                    <div style="text-align: right">
+                        <p:panelGrid styleClass="" columns="1">
+                            <p:row>
+                                <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
+                                    <p:outputLabel style="margin: 2px" value="Hejsan!" />
+                                </div>
+                                <div style="text-align: left; margin: 5px 0px 5px 0px;background-color: pink">
+                                    <p:outputLabel style="margin: 2px" value="Hej... :)"/>
+                                </div>
+                            </p:row>
+                            <p:separator />
+                            <p:row>
+                                <div>
+                                    <p:inputText style="border-style: none; margin-right: 10px;" placeholder="Type here..." value="#{post.message}" >
+                                        <f:validateLength minimum="1" maximum="512" />
+                                    </p:inputText>
+                                    <p:commandButton  value="Send"/>
+                                </div>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
+                </p:row>
+        </p:panelGrid>
+
+    </div>
+
+</h:body>
+</html>

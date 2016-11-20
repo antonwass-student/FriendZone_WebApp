@@ -133,6 +133,7 @@ public class ProfileBean {
         wallId = wall.getId();
         posts = wall.getPosts();
 
+
     }
 
     public void getMe(){
