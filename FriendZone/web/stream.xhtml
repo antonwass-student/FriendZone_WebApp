@@ -33,7 +33,7 @@
 
                     </p:autoComplete>
 
-                    <p:commandButton type="button" value="Logout" icon="fa fa-sign-out" />
+                    <p:commandButton type="button" value="Logout" icon="fa fa-sign-out" action="#{login.logout}" />
                 </f:facet>
             </p:menubar>
         </h:form>
@@ -66,11 +66,14 @@
         <c:forEach items="#{stream.stream.posts}" var="post">
             <div class="postBox">
                 <div>
-                    <p:panelGrid styleClass="postGrid" style="background: none" columns="2">
+                    <p:panelGrid styleClass="postGrid" style="background: none;" columns="2">
                         <p:graphicImage name="profile.png" height="45" width="45" />
-                        <p:panelGrid columns="1">
+                        <p:panelGrid columns="2">
                             <p:link value="#{post.author.name}" outcome="profile">
                                 <f:param name="userId" value="#{post.author.id}" />
+                            </p:link>
+                            <p:link value="#{post.ownerOfWall.name}" outcome="profile">
+                                <f:param name="userId" value="#{post.ownerOfWall.id}" />
                             </p:link>
                             <p:outputLabel value="#{post.timestamp}"/>
                         </p:panelGrid>

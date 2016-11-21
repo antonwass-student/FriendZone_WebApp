@@ -188,4 +188,40 @@ public class FriendshipService {
         }
     }
 
+    @Path("/remove")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public String removeFriendship(FriendshipDeleteBO friendNoMore){
+        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        try{
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity  WHERE session_id = :sid", UserEntity.class);
+
+            query.setParameter("sid", friendNoMore.getUser_session_id());
+
+            UserEntity user = query.getSingleResult();
+
+            FriendshipEntity friendship = em.find(FriendshipEntity.class, friendNoMore.getFriendshipId());
+
+            if(friendship.getUserByInviter().getUserId() == user.getUserId() ||
+                    friendship.getUserByReceiver().getUserId() == user.getUserId()){
+                em.getTransaction().begin();
+                em.remove(friendship);
+                em.getTransaction().commit();
+                return "Friendship removed.";
+            }else{
+                return "User is not part of friendship.";
+            }
+
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            return "An error occured, can not remove friendship.";
+        }finally {
+            em.close();
+        }
+
+    }
+
 }

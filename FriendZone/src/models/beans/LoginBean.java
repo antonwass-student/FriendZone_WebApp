@@ -103,4 +103,24 @@ public class LoginBean {
 
         return "";
     }
+
+    public String logout(){
+
+        String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+        Client c = Client.create(clientConfig);
+
+        WebResource webResource = c.resource("http://localhost:8080/api/user/logout/"+sessionId);
+
+        ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN)
+                .post(ClientResponse.class);
+
+        System.out.println("User logged out.");
+
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+        return "login";
+    }
 }

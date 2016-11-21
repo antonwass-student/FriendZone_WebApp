@@ -150,6 +150,34 @@ public class UserService {
         return "Registered";
     }
 
+    @Path("/logout/{session_id}")
+    @POST
+    @Produces(MediaType.TEXT_PLAIN)
+    public String logout(@PathParam("session_id") String id){
+        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        try{
+            TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
+
+            query.setParameter("sid", id);
+
+            UserEntity user = query.getSingleResult();
+
+            em.getTransaction().begin();
+            user.setSession_id("");
+            em.getTransaction().commit();
+
+            return "Successfully logged out.";
+
+        }catch(Exception e){
+
+            e.printStackTrace();
+            return "Could not logout.";
+
+        }finally {
+            em.close();
+        }
+    }
+
 
 
 }

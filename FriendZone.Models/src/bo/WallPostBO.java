@@ -10,6 +10,7 @@ public class WallPostBO {
     private String message;
     private Date timestamp;
     private UserSmallBO author;
+    private UserSmallBO ownerOfWall;
     private byte[] picture; //??
 
     public WallPostBO(String arg){}
@@ -54,5 +55,13 @@ public class WallPostBO {
 
     public void setPicture(byte[] picture) {
         this.picture = picture;
+    }
+
+    public UserSmallBO getOwnerOfWall() {
+        return ownerOfWall;
+    }
+
+    public void setOwnerOfWall(UserSmallBO ownerOfWall) {
+        this.ownerOfWall = ownerOfWall;
     }
 }

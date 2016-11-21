@@ -6,6 +6,7 @@ import bo.UserSmallBO;
 import bo.WallPostBO;
 import main.java.entities.FriendshipEntity;
 import main.java.entities.UserEntity;
+import main.java.entities.WallEntity;
 import main.java.entities.WallPostEntity;
 import org.hibernate.Criteria;
 
@@ -45,13 +46,24 @@ public class StreamService {
         //
         CriteriaQuery<WallPostEntity> cq = cb.createQuery(WallPostEntity.class);
         Root<WallPostEntity> root = cq.from(WallPostEntity.class);
+        List<Predicate> predicates = new ArrayList<Predicate>();
 
         Expression<UserEntity> exp = root.get("userByAuthor");
 
-        Predicate predicate = exp.in(friends);
+        Predicate predicate1 = exp.in(friends);
 
-        cq.where(predicate);
-        cq.orderBy(cb.asc(root.get("timestamp")));
+        // try to get posts that are posted on a friends wall even if the author is not a friend.
+
+        Expression<UserEntity> exp2 = root.get("wallByWall").get("userByOwner");
+
+        Predicate predicate2 = exp2.in(friends);
+        //----
+
+        predicates.add(predicate1);
+        predicates.add(predicate2);
+
+        cq.where(cb.or(predicates.toArray(new Predicate[]{})));
+        cq.orderBy(cb.desc(root.get("wallpostId")));
         //create query with criteria
 
         TypedQuery<WallPostEntity> postQuery = em.createQuery(cq);
@@ -77,18 +89,25 @@ public class StreamService {
             author.setMail(p.getUserByAuthor().getEmail());
             wp.setAuthor(author);
 
+            UserSmallBO ownerOfWall = new UserSmallBO();
+            UserEntity wallOwner = p.getWallByWall().getUserByOwner();
+            ownerOfWall.setId(wallOwner.getUserId());
+            ownerOfWall.setName(wallOwner.getName());
+            ownerOfWall.setMail(wallOwner.getEmail());
+            wp.setOwnerOfWall(ownerOfWall);
+
             postBOs.add(wp);
         }
 
 
-        // Vi borde göra orderby i frågorna till db ist.
+        /*
+        // Vi borde göra orderby i frågorna till db ist. klart!
         Collections.sort(postBOs, new Comparator<WallPostBO>(){
             @Override
             public int compare(WallPostBO p1, WallPostBO p2){
                 return p2.getTimestamp().compareTo(p1.getTimestamp());
             }
-        });
-
+        });*/
 
         response.setPosts(postBOs);
 
