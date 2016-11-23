@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/ChatService/ChatService.iml" filepath="$PROJECT_DIR$/ChatService/ChatService.iml" />
       <module fileurl="file://$PROJECT_DIR$/FriendService/FriendService.iml" filepath="$PROJECT_DIR$/FriendService/FriendService.iml" />
       <module fileurl="file://$PROJECT_DIR$/FriendZone/FriendZone.iml" filepath="$PROJECT_DIR$/FriendZone/FriendZone.iml" />
       <module fileurl="file://$PROJECT_DIR$/FriendZone.Models/FriendZone.Models.iml" filepath="$PROJECT_DIR$/FriendZone.Models/FriendZone.Models.iml" />

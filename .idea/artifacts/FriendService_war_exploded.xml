@@ -15,6 +15,7 @@
           <element id="library" level="project" name="org.hibernate:hibernate-entitymanager:5.2.4.Final" />
           <element id="library" level="project" name="com.sun.jersey:jersey-bundle:1.19.3" />
           <element id="file-copy" path="C:/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/sve/sqljdbc4.jar" />
+          <element id="library" level="project" name="com.sun.jersey:jersey-json:1.19.3" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="FriendService/web/Web" />
