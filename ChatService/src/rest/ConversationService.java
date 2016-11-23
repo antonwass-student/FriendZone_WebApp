@@ -2,6 +2,7 @@ package rest;
 
 
 import bo.ConversationNewBO;
+import bo.MessageNewBO;
 import entities.ConversationEntity;
 import entities.MessageEntity;
 import entities.UsrEntity;
@@ -9,10 +10,7 @@ import entities.UsrEntity;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,10 +32,10 @@ public class ConversationService {
 
 
     @Path("/create")
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
-    public String getAllMessages(ConversationNewBO newConvo){
+    public String createNewConversation(ConversationNewBO newConvo){
         EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
         try{
             TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
@@ -66,6 +64,44 @@ public class ConversationService {
         }finally {
             em.close();
         }
+    }
+
+    @Path("/send")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.TEXT_PLAIN)
+    public String sendMessage(MessageNewBO newMessage){
+
+        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        try{
+            TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
+
+            query.setParameter("sid", newMessage.getSender_session_ID());
+
+            UsrEntity user = query.getSingleResult();
+
+            ConversationEntity convo = em.find(ConversationEntity.class, newMessage.getTarget_conversation_ID());
+
+            MessageEntity msg = new MessageEntity();
+
+            msg.setText(newMessage.getText());
+            msg.setConversationByReceiver(convo);
+            msg.setUsrBySender(user);
+
+            em.getTransaction().begin();
+            em.persist(msg);
+            em.getTransaction().commit();
+
+            return "Message sent";
+        }catch(Exception e){
+            e.printStackTrace();
+            return "Could not send message";
+        }finally {
+            em.close();
+        }
+
 
     }
+
+
 }
