@@ -17,6 +17,7 @@ public class UsrEntity {
     private Collection<ConversationEntity> conversations;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", nullable = false)
     public int getUserId() {
         return userId;
