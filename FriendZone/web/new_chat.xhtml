@@ -40,16 +40,25 @@
 
     </f:view>
 
-    <div class="page_wrapper_content">
-        <p:outputLabel for="results" value="#{friends.noOfFriends} friend(s) found"></p:outputLabel>
-        <p:dataTable id="results" value="#{friends.friends}" var="fr" border="1">
 
+
+    <div class="page_wrapper_content">
+        <h:form>
+            <p:outputLabel value="To:" />
+            <p:inputText value="#{users.name}" valueChangeListener="#{users.getBySearchInput}" placeholder="Search people..." style="margin-bottom: 10px">
+                <p:ajax event="keyup"  update="results" ></p:ajax>
+            </p:inputText>
+            <br/>
+
+        <p:dataTable id="results" value="#{users.result}" var="usr" border="1">
             <p:column>
-                <p:link value="#{fr.name}" outcome="profile">
-                    <f:param name="userId" value="#{fr.id}" />
-                </p:link>
+
+                <h:commandButton type="submit" id="knapp" value="#{usr.name}" action="#{chat.createNewConversation(usr.id)}" />
             </p:column>
         </p:dataTable>
+
+    </h:form>
+
 
     </div>
 

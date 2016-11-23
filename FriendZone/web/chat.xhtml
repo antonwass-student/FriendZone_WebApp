@@ -27,6 +27,7 @@
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
                 <p:menuitem value="Requests" icon="fa fa-users" outcome="/requests.xhtml" />
                 <p:menuitem value="Friends" icon="fa fa-users" outcome="/friends.xhtml" />
+                <p:menuitem value="Chat" icon="fa fa-comments" outcome="/chat.xhtml" />
                 <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
 
 
@@ -40,11 +41,14 @@
     </f:view>
 
     <div class="page_wrapper_content">
-
+        <p:outputLabel value="Creat new chat" />
         <p:panelGrid style="width: 600px;height: auto" styleClass="panelGridCenter" columns="2">
                 <p:row>
                     <div style="text-align: left">
                         <p:panelGrid styleClass="" columns="1">
+                            <h:form>
+                                <p:commandButton  value="Create new chat" action="new_chat?faces-redirect=true"/>
+                            </h:form>
                             <div >
                                 <p:link value="Namn 1" />
                             </div>
@@ -63,7 +67,9 @@
                 </p:row>
 
                 <p:row>
+
                     <div style="text-align: right">
+                        <h:form>
                         <p:panelGrid styleClass="" columns="1">
                             <p:row>
                                 <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
@@ -83,6 +89,7 @@
                                 </div>
                             </p:row>
                         </p:panelGrid>
+                    </h:form>
                     </div>
                 </p:row>
         </p:panelGrid>

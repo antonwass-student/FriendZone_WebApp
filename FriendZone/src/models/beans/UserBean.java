@@ -10,6 +10,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Iterator;
  * Created by chris on 2016-11-17.
  */
 @ManagedBean(name = "users")
+@SessionScoped
 public class UserBean {
     private int id;
     private String name;
