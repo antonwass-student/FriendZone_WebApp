@@ -44,6 +44,6 @@ public class ChatBean {
         ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, conv);
 
-        return "profile";
+        return "chat";
     }
 }
