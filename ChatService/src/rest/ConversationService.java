@@ -1,8 +1,7 @@
 package rest;
 
 
-import bo.ConversationNewBO;
-import bo.MessageNewBO;
+import bo.*;
 import entities.ConversationEntity;
 import entities.MessageEntity;
 import entities.UsrEntity;
@@ -24,10 +23,55 @@ import java.util.List;
 @Path("/conversation")
 public class ConversationService {
 
+
+    @Path("/get/messages")
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getMessage(){
-        return "Hello world!";
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public ConversationMessagesBO getMessages(ConversationRequestBO request){
+        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        try{
+            ConversationEntity conversation = em.find(ConversationEntity.class, request.getRequested_conversation_id());
+
+            TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
+
+            query.setParameter("sid", request.getUser_session_id());
+
+            UsrEntity user = query.getSingleResult();
+
+            if(conversation.getMessagesByConversationId().contains(user)){
+
+                List<MessageBO> messages = new ArrayList();
+
+                for(MessageEntity msg : conversation.getMessagesByConversationId()){
+                    UsrEntity se = msg.getUsrBySender();
+                    UserSmallBO sender = new UserSmallBO();
+                    sender.setId(se.getUserId());
+                    sender.setName(se.getName());
+                    sender.setMail(se.getEmail());
+
+                    MessageBO message = new MessageBO();
+                    message.setText(msg.getText());
+                    message.setSender(sender);
+                    message.setSent(msg.getSent());
+
+                    messages.add(message);
+                }
+                ConversationMessagesBO result = new ConversationMessagesBO();
+                result.setMessages(messages);
+                return result;
+            }else{
+                System.out.println("User is not eligible to get messages from this conversation.");
+                return null;
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+            System.out.println("error");
+            return null;
+        }finally {
+            em.close();
+        }
     }
 
 
@@ -99,8 +143,6 @@ public class ConversationService {
         }finally {
             em.close();
         }
-
-
     }
 
 
