@@ -12,6 +12,7 @@ public class ConversationEntity {
     private int conversationId;
     private String namn;
     private Collection<MessageEntity> messagesByConversationId;
+    private Collection<UsrEntity> members;
 
     @Id
     @Column(name = "conversation_id", nullable = false)
@@ -60,5 +61,15 @@ public class ConversationEntity {
 
     public void setMessagesByConversationId(Collection<MessageEntity> messagesByConversationId) {
         this.messagesByConversationId = messagesByConversationId;
+    }
+
+    @ManyToMany
+    @JoinTable(name = "User_Conversation", catalog = "community", schema = "dbo", joinColumns = @JoinColumn(name = "convo_id", referencedColumnName = "conversation_id", nullable = false), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false))
+    public Collection<UsrEntity> getMembers() {
+        return members;
+    }
+
+    public void setMembers(Collection<UsrEntity> members) {
+        this.members = members;
     }
 }

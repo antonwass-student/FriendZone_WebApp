@@ -1,6 +1,7 @@
 package entities;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by Anton on 2016-11-23.
@@ -13,6 +14,7 @@ public class UsrEntity {
     private String email;
     private String password;
     private String sessionId;
+    private Collection<ConversationEntity> conversations;
 
     @Id
     @Column(name = "user_id", nullable = false)
@@ -88,5 +90,14 @@ public class UsrEntity {
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (sessionId != null ? sessionId.hashCode() : 0);
         return result;
+    }
+
+    @ManyToMany(mappedBy = "members")
+    public Collection<ConversationEntity> getConversations() {
+        return conversations;
+    }
+
+    public void setConversations(Collection<ConversationEntity> conversations) {
+        this.conversations = conversations;
     }
 }

@@ -20,7 +20,7 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
+        <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="NewPersistenceUnit" value="1dd5119b-e09f-476c-8aea-ed231ff92374" />
         </datasource-mapping>
@@ -33,11 +33,20 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
     </content>
-    <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="com.sun.jersey:jersey-bundle:1.19.3" level="project" />
-    <orderEntry type="library" name="Hibernate 5.2.3-5.2.3" level="project" />
     <orderEntry type="library" name="JPA 2.1-2.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.0.M10" level="application_server_libraries" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="library" scope="PROVIDED" name="com.sun.jersey:jersey-bundle:1.19.3" level="project" />
+    <orderEntry type="library" name="Hibernate 5.2.3-5.2.3" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://C:/Program Files/Microsoft JDBC Driver 6.0 for SQL Server/sqljdbc_6.0/enu/sqljdbc4.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

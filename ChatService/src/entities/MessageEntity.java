@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 @Table(name = "Message", schema = "dbo", catalog = "community")
 public class MessageEntity {
     private int messageId;
-    private int sender;
     private Timestamp sent;
-    private int receiver;
+    private String text;
+    private UsrEntity usrBySender;
     private ConversationEntity conversationByReceiver;
 
     @Id
@@ -26,16 +26,6 @@ public class MessageEntity {
     }
 
     @Basic
-    @Column(name = "sender", nullable = false)
-    public int getSender() {
-        return sender;
-    }
-
-    public void setSender(int sender) {
-        this.sender = sender;
-    }
-
-    @Basic
     @Column(name = "sent", nullable = false)
     public Timestamp getSent() {
         return sent;
@@ -46,13 +36,13 @@ public class MessageEntity {
     }
 
     @Basic
-    @Column(name = "receiver", nullable = false)
-    public int getReceiver() {
-        return receiver;
+    @Column(name = "text", nullable = true, length = 255)
+    public String getText() {
+        return text;
     }
 
-    public void setReceiver(int receiver) {
-        this.receiver = receiver;
+    public void setText(String text) {
+        this.text = text;
     }
 
     @Override
@@ -63,9 +53,8 @@ public class MessageEntity {
         MessageEntity that = (MessageEntity) o;
 
         if (messageId != that.messageId) return false;
-        if (sender != that.sender) return false;
-        if (receiver != that.receiver) return false;
         if (sent != null ? !sent.equals(that.sent) : that.sent != null) return false;
+        if (text != null ? !text.equals(that.text) : that.text != null) return false;
 
         return true;
     }
@@ -73,10 +62,19 @@ public class MessageEntity {
     @Override
     public int hashCode() {
         int result = messageId;
-        result = 31 * result + sender;
         result = 31 * result + (sent != null ? sent.hashCode() : 0);
-        result = 31 * result + receiver;
+        result = 31 * result + (text != null ? text.hashCode() : 0);
         return result;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "sender", referencedColumnName = "user_id", nullable = false)
+    public UsrEntity getUsrBySender() {
+        return usrBySender;
+    }
+
+    public void setUsrBySender(UsrEntity usrBySender) {
+        this.usrBySender = usrBySender;
     }
 
     @ManyToOne
