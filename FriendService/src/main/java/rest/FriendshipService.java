@@ -4,6 +4,7 @@ import bo.*;
 import main.java.entities.FriendRequestEntity;
 import main.java.entities.FriendshipEntity;
 import main.java.entities.UserEntity;
+import main.java.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -25,7 +26,7 @@ public class FriendshipService {
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<UserSmallBO> getFriendsFrom(@PathParam("session_id")String id){
         try{
-            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+            EntityManager em = EntityManagerHelper.createEntityManager();
             TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
             query.setParameter("sid", id);
             UserEntity user = query.getSingleResult();
@@ -57,7 +58,7 @@ public class FriendshipService {
     @Produces(MediaType.APPLICATION_JSON)
     public Collection<FriendRequestBO> getAllIncommingRequestsForUser(@PathParam("session_id") String user_session_id){
         try{
-            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+            EntityManager em = EntityManagerHelper.createEntityManager();
 
             TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
 
@@ -113,7 +114,7 @@ public class FriendshipService {
     public String sendFriendRequest(FriendRequestNewBO invitation){
         try{
 
-            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+            EntityManager em = EntityManagerHelper.createEntityManager();
 
             FriendRequestEntity request = new FriendRequestEntity();
 
@@ -146,7 +147,7 @@ public class FriendshipService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String acceptFriendRequest(FriendRequestDecisionBO decision){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
 
         try{
             if(decision.isDecision() == false){
@@ -193,7 +194,7 @@ public class FriendshipService {
     @Produces(MediaType.TEXT_PLAIN)
     @Consumes(MediaType.APPLICATION_JSON)
     public String removeFriendship(FriendshipDeleteBO friendNoMore){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         try{
             TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity  WHERE session_id = :sid", UserEntity.class);
 

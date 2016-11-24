@@ -8,6 +8,7 @@ import main.java.entities.FriendshipEntity;
 import main.java.entities.UserEntity;
 import main.java.entities.WallEntity;
 import main.java.entities.WallPostEntity;
+import main.java.util.EntityManagerHelper;
 import org.hibernate.Criteria;
 
 import javax.persistence.EntityManager;
@@ -29,7 +30,7 @@ public class StreamService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public StreamGetResponseBO loadStream(StreamGetRequestBO streamRequest){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
 
         TypedQuery<UserEntity> queryUser = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
         queryUser.setParameter("sid", streamRequest.getUserSessionId());
@@ -98,16 +99,6 @@ public class StreamService {
 
             postBOs.add(wp);
         }
-
-
-        /*
-        // Vi borde göra orderby i frågorna till db ist. klart!
-        Collections.sort(postBOs, new Comparator<WallPostBO>(){
-            @Override
-            public int compare(WallPostBO p1, WallPostBO p2){
-                return p2.getTimestamp().compareTo(p1.getTimestamp());
-            }
-        });*/
 
         response.setPosts(postBOs);
 

@@ -14,6 +14,7 @@ import java.util.Collection;
 
 import main.java.entities.WallEntity;
 import main.java.entities.WallPostEntity;
+import main.java.util.EntityManagerHelper;
 
 /**
  * Created by Anton on 2016-11-15.
@@ -94,7 +95,7 @@ public class UserService {
 
         System.out.println("User logging in");
 
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         System.out.println("Entered login operation.");
 
         TypedQuery<UserEntity> query = em.createQuery(
@@ -125,7 +126,7 @@ public class UserService {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public String register(RegisterBO userInfo){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         System.out.println("Received registration data.");
 
 
@@ -154,7 +155,7 @@ public class UserService {
     @POST
     @Produces(MediaType.TEXT_PLAIN)
     public String logout(@PathParam("session_id") String id){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         try{
             TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE session_id = :sid", UserEntity.class);
 

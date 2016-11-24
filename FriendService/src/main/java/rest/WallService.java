@@ -7,6 +7,7 @@ import bo.WallPostNewBO;
 import main.java.entities.UserEntity;
 import main.java.entities.WallEntity;
 import main.java.entities.WallPostEntity;
+import main.java.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
@@ -26,7 +27,7 @@ public class WallService {
     @Produces(MediaType.APPLICATION_JSON)
     public WallBO getWallByUser(@PathParam("id") int userId){
 
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
 
         TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE userId = :uid",
                 UserEntity.class);
@@ -91,7 +92,7 @@ public class WallService {
     @Path("/new")
     @POST
     public String addWall(String userId){
-        EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
 
         TypedQuery<UserEntity> query = em.createQuery("FROM UserEntity WHERE userId = :uid",
                 UserEntity.class);
@@ -121,7 +122,7 @@ public class WallService {
     @Consumes(MediaType.APPLICATION_JSON)
     public String addPostToWall(WallPostNewBO newPost){
         try{
-            EntityManager em = Persistence.createEntityManagerFactory("persistenceUnit").createEntityManager();
+            EntityManager em = EntityManagerHelper.createEntityManager();
 
             WallPostEntity wallPostEntity = new WallPostEntity();
             wallPostEntity.setMessage(newPost.getMessage());

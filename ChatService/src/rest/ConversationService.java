@@ -5,10 +5,15 @@ import bo.*;
 import entities.ConversationEntity;
 import entities.MessageEntity;
 import entities.UsrEntity;
+import util.EntityManagerHelper;
 
+import javax.enterprise.context.Conversation;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -23,13 +28,12 @@ import java.util.List;
 @Path("/conversation")
 public class ConversationService {
 
-
-    @Path("/get/messages")
+    @Path("/messages")
     @GET
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ConversationMessagesBO getMessages(ConversationRequestBO request){
-        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         try{
             ConversationEntity conversation = em.find(ConversationEntity.class, request.getRequested_conversation_id());
 
@@ -113,8 +117,8 @@ public class ConversationService {
     @Path("/send")
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.TEXT_PLAIN)
-    public String sendMessage(MessageNewBO newMessage){
+    @Produces(MediaType.APPLICATION_JSON)
+    public MessageSentResponseBO sendMessage(MessageNewBO newMessage){
 
         EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
         try{
@@ -136,14 +140,76 @@ public class ConversationService {
             em.persist(msg);
             em.getTransaction().commit();
 
-            return "Message sent";
+            MessageSentResponseBO response = new MessageSentResponseBO();
+            List<String> sids = new ArrayList<>();
+            response.setSession_ids_in_convo(sids);
+
+            UserSmallBO sender = new UserSmallBO();
+            sender.setId(user.getUserId());
+            sender.setName(user.getName());
+            sender.setMail(user.getEmail());
+
+            response.setSender(sender);
+
+            for(UsrEntity usr : convo.getMembers()){
+                sids.add(usr.getSessionId());
+            }
+
+            return response;
         }catch(Exception e){
             e.printStackTrace();
-            return "Could not send message";
+            return null;
         }finally {
             em.close();
         }
     }
+
+    @Path("/get/{userId}")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public ConversationListBO getConversationsByUser(@PathParam("userId")String userSessionId){
+        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+
+        try{
+            TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
+            query.setParameter("sid", userSessionId);
+
+            UsrEntity user = query.getSingleResult();
+
+            ConversationListBO conversationList = new ConversationListBO();
+            Collection<ConversationBO> conversations = new ArrayList();
+
+            for(ConversationEntity ce : user.getConversations()){
+                ConversationBO convo = new ConversationBO();
+
+                Collection<UserSmallBO> members = new ArrayList<>();
+
+                for(UsrEntity usr : ce.getMembers()){
+                    UserSmallBO member = new UserSmallBO();
+                    member.setId(usr.getUserId());
+                    member.setMail(usr.getEmail());
+                    member.setName(usr.getName());
+
+                    members.add(member);
+                }
+                convo.setMembers(members);
+                convo.setTitle(ce.getNamn());
+
+                conversations.add(convo);
+            }
+
+            conversationList.setConvos(conversations);
+
+            return conversationList;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }finally {
+            em.close();
+        }
+
+    }
+
 
 
 }
