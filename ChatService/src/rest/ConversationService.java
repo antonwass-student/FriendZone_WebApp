@@ -167,7 +167,6 @@ public class ConversationService {
 
     @Path("/get/{userId}")
     @GET
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ConversationListBO getConversationsByUser(@PathParam("userId")String userSessionId){
         EntityManager em = EntityManagerHelper.createEntityManager();
