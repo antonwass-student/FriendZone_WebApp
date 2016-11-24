@@ -10,11 +10,10 @@ import javax.persistence.Persistence;
 public class EntityManagerHelper {
     private static EntityManagerFactory emf;
 
-    static{
-        emf = Persistence.createEntityManagerFactory("NewPersistenceUnit");
-    }
-
     public static EntityManager createEntityManager(){
+        if(emf==null){
+            emf = Persistence.createEntityManagerFactory("NewPersistenceUnit");
+        }
         return emf.createEntityManager();
     }
 }

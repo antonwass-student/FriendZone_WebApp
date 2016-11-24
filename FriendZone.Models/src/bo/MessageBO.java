@@ -1,6 +1,6 @@
 package bo;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Anton on 2016-11-23.
@@ -8,7 +8,7 @@ import java.sql.Timestamp;
 public class MessageBO {
     private UserSmallBO sender;
     private String text;
-    private Timestamp sent;
+    private Date sent;
 
     public MessageBO(){}
     public MessageBO(String arg){}
@@ -29,11 +29,11 @@ public class MessageBO {
         this.text = text;
     }
 
-    public Timestamp getSent() {
+    public Date getSent() {
         return sent;
     }
 
-    public void setSent(Timestamp sent) {
+    public void setSent(Date sent) {
         this.sent = sent;
     }
 }

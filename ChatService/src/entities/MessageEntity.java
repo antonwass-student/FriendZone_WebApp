@@ -3,7 +3,7 @@ package entities;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Created by Anton on 2016-11-23.
@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "Message", schema = "dbo", catalog = "community")
 public class MessageEntity {
     private int messageId;
-    private Timestamp sent;
+    private Date sent;
     private String text;
     private UsrEntity usrBySender;
     private ConversationEntity conversationByReceiver;
@@ -29,14 +29,14 @@ public class MessageEntity {
     }
 
     @Basic
-    @Column(name = "sent", nullable = false)
+    @Column(name = "sent", nullable = true)
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    public Timestamp getSent() {
+    public Date getSent() {
         return sent;
     }
 
-    public void setSent(Timestamp sent) {
+    public void setSent(Date sent) {
         this.sent = sent;
     }
 
