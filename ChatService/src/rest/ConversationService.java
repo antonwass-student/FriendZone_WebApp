@@ -85,7 +85,7 @@ public class ConversationService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.TEXT_PLAIN)
     public String createNewConversation(ConversationNewBO newConvo){
-        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         try{
             TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
 
@@ -121,7 +121,7 @@ public class ConversationService {
     @Produces(MediaType.APPLICATION_JSON)
     public MessageSentResponseBO sendMessage(MessageNewBO newMessage){
 
-        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
         try{
             TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
 
@@ -170,7 +170,7 @@ public class ConversationService {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ConversationListBO getConversationsByUser(@PathParam("userId")String userSessionId){
-        EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
+        EntityManager em = EntityManagerHelper.createEntityManager();
 
         try{
             TypedQuery<UsrEntity> query = em.createQuery("FROM UsrEntity WHERE sessionId = :sid", UsrEntity.class);
