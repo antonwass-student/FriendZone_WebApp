@@ -1,5 +1,7 @@
 package entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -28,6 +30,8 @@ public class MessageEntity {
 
     @Basic
     @Column(name = "sent", nullable = false)
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     public Timestamp getSent() {
         return sent;
     }
