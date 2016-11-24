@@ -29,7 +29,7 @@ import java.util.List;
 public class ConversationService {
 
     @Path("/messages")
-    @GET
+    @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ConversationMessagesBO getMessages(ConversationRequestBO request){
@@ -62,6 +62,7 @@ public class ConversationService {
                     messages.add(message);
                 }
                 ConversationMessagesBO result = new ConversationMessagesBO();
+                if (messages.isEmpty()) messages.add(new MessageBO());
                 result.setMessages(messages);
                 return result;
             }else{
@@ -166,6 +167,7 @@ public class ConversationService {
 
     @Path("/get/{userId}")
     @GET
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public ConversationListBO getConversationsByUser(@PathParam("userId")String userSessionId){
         EntityManager em = Persistence.createEntityManagerFactory("NewPersistenceUnit").createEntityManager();
@@ -192,6 +194,7 @@ public class ConversationService {
 
                     members.add(member);
                 }
+                convo.setId(ce.getConversationId());
                 convo.setMembers(members);
                 convo.setTitle(ce.getNamn());
 

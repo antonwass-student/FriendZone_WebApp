@@ -49,19 +49,15 @@
                             <h:form>
                                 <p:commandButton  value="Create new chat" action="new_chat?faces-redirect=true"/>
                             </h:form>
-                            <div >
-                                <p:link value="Namn 1" />
-                            </div>
-
-                            <div >
-                                <p:link value="Namn 2" />
-                            </div>
-                            <div >
-                                <p:link value="Namn 3" />
-                            </div>
-                            <div >
-                                <p:link value="Namn 4" />
-                            </div>
+                            <h:form>
+                                <c:forEach items="#{chat.conversations}" var="ch">
+                                    <div >
+                                        <p:commandLink value="#{ch.title}" >
+                                            <f:ajax listener="#{chat.grabChat(ch.id)}" />
+                                        </p:commandLink>
+                                    </div>
+                                </c:forEach>
+                            </h:form>
                         </p:panelGrid>
                     </div>
                 </p:row>
