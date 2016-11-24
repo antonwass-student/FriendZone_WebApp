@@ -8,9 +8,19 @@ import java.util.Collection;
 public class ConversationBO {
     private Collection<UserSmallBO> members;
     private String title;
+    private int id;
+
 
     public ConversationBO(String arg){}
     public ConversationBO(){}
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Collection<UserSmallBO> getMembers() {
         return members;

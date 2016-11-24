@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <dataSource name="persistanceUnit/Hibernate">
   <database-model serializer="dbm" rdbms="MSSQL" format-version="2.6">
     <database id="1" name="community">
@@ -10,7 +11,7 @@
     <schema id="3" parent="1" name="dbo">
       <object-id>1</object-id>
       <visible>1</visible>
-      <introspection-timestamp>2016-11-23.16:19:26.213</introspection-timestamp>
+      <introspection-timestamp>2016-11-23.23:24:59.917</introspection-timestamp>
     </schema>
     <schema id="4" parent="1" name="guest">
       <object-id>2</object-id>
@@ -105,14 +106,14 @@
     <index id="27" parent="16" name="PK__Conversa__311E7E9ACCB67A32">
       <name-surrogate>1</name-surrogate>
       <columns>conversation_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="28" parent="16" name="Conversation_conversation_id_uindex">
       <columns>conversation_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -143,14 +144,14 @@
     <index id="34" parent="17" name="PK__FriendRe__E4C347360730D13F">
       <name-surrogate>1</name-surrogate>
       <columns>friendRequest_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="35" parent="17" name="FriendRequest_friendRequest_id_uindex">
       <columns>friendRequest_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -201,14 +202,14 @@
     <index id="43" parent="18" name="PK__Friendsh__BC802BCF12F76388">
       <name-surrogate>1</name-surrogate>
       <columns>friendship_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="44" parent="18" name="Friendship_friendship_id_uindex">
       <columns>friendship_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -263,14 +264,14 @@
     <index id="53" parent="19" name="PK__Message__0BBF6EE63DD243B2">
       <name-surrogate>1</name-surrogate>
       <columns>message_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="54" parent="19" name="Message_message_id_uindex">
       <columns>message_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -322,20 +323,20 @@
     <index id="63" parent="20" name="PK__Profile__AEBB701F1820DFC7">
       <name-surrogate>1</name-surrogate>
       <columns>profile_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="64" parent="20" name="Profile_profile_id_uindex">
       <columns>profile_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
     <index id="65" parent="20" name="Profile_owner_uindex">
       <columns>owner</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>3</position>
     </index>
@@ -373,14 +374,14 @@
     <index id="71" parent="21" name="PK__User_Con__2D0AA978A6BAFC4B">
       <name-surrogate>1</name-surrogate>
       <columns>user_convo_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="72" parent="21" name="User_Conversation_user_convo_id_uindex">
       <columns>user_convo_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -434,26 +435,26 @@
     <index id="81" parent="22" name="PK__User__B9BE370FD1BDDEA8">
       <name-surrogate>1</name-surrogate>
       <columns>user_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="82" parent="22" name="User_user_id_uindex">
       <columns>user_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
     <index id="83" parent="22" name="User_email_uindex">
       <columns>email</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>3</position>
     </index>
     <index id="84" parent="22" name="Usr_session_id_uindex">
       <columns>session_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>4</position>
     </index>
@@ -478,14 +479,14 @@
     <index id="88" parent="23" name="PK__Wall__D363C4153E344331">
       <name-surrogate>1</name-surrogate>
       <columns>wall_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="89" parent="23" name="Wall_wall_id_uindex">
       <columns>wall_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
@@ -532,14 +533,14 @@
     <index id="98" parent="24" name="PK__WallPost__6D004039407BEABF">
       <name-surrogate>1</name-surrogate>
       <columns>wallpost_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <clustering>1</clustering>
       <position>1</position>
     </index>
     <index id="99" parent="24" name="WallPost_wallpost_id_uindex">
       <columns>wallpost_id</columns>
-      <desc-columns />
+      <desc-columns></desc-columns>
       <unique>1</unique>
       <position>2</position>
     </index>
