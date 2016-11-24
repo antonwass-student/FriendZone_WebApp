@@ -1,6 +1,9 @@
 package main.java.entities;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import javax.persistence.*;
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -11,7 +14,7 @@ import java.sql.Timestamp;
 public class MessageEntity {
     private int messageId;
     private int sender;
-    private Timestamp sent;
+    private Date sent;
     private ConversationEntity conversationByReceiver;
 
     @Id
@@ -37,11 +40,11 @@ public class MessageEntity {
 
     @Basic
     @Column(name = "sent", nullable = false)
-    public Timestamp getSent() {
+    public Date getSent() {
         return sent;
     }
 
-    public void setSent(Timestamp sent) {
+    public void setSent(Date sent) {
         this.sent = sent;
     }
 

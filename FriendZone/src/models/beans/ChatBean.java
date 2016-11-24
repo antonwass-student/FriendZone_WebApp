@@ -11,6 +11,7 @@ import com.sun.jersey.api.json.JSONConfiguration;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.ws.rs.core.MediaType;
 import java.util.Collection;
@@ -23,8 +24,29 @@ import java.util.Collection;
 public class ChatBean {
     private Collection<ConversationBO> conversations;
     private ConversationMessagesBO conversation;
+    private UserSmallBO me;
+    private int activeConversationId;
+    private String messageFromInput;
 
-    public ChatBean() { getConversationsOfUser();
+    public ChatBean() {
+        getConversationsOfUser();
+        getLoggedInUser();
+    }
+
+    public String getMessageFromInput() {
+        return messageFromInput;
+    }
+
+    public void setMessageFromInput(String messageFromInput) {
+        this.messageFromInput = messageFromInput;
+    }
+
+    public UserSmallBO getMe() {
+        return me;
+    }
+
+    public void setMe(UserSmallBO me) {
+        this.me = me;
     }
 
     public void setConversations(Collection<ConversationBO> conversations) {
@@ -78,7 +100,15 @@ public class ChatBean {
         conversations = list.getConvos();
         return "";
     }
-
+    public void getLoggedInUser(){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        Client c = Client.create(clientConfig);
+        String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
+        WebResource webResource = c.resource("http://localhost:8080/api/user/get/session/"+sessionId);
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
+        me = response.getEntity(UserSmallBO.class);
+    }
     public void grabChat(int convId){
         ClientConfig clientConfig = new DefaultClientConfig();
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
@@ -90,6 +120,23 @@ public class ChatBean {
         convReq.setUser_session_id(sessionId);
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(ClientResponse.class,convReq);
         conversation = response.getEntity(ConversationMessagesBO.class);
+        activeConversationId = convId;
+
+    }
+
+    public void sendMessage(){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+        Client c = Client.create(clientConfig);
+        String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
+        WebResource webResource = c.resource("http://localhost:8080/chat-api/conversation/send");
+        MessageNewBO msg = new MessageNewBO();
+        msg.setSender_session_ID(sessionId);
+        msg.setTarget_conversation_ID(activeConversationId);
+        msg.setText(messageFromInput);
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(ClientResponse.class,msg);
+        System.out.println("Send response: "+response.getStatus());
+
     }
 
 

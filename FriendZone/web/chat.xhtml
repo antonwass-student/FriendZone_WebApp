@@ -53,7 +53,7 @@
                                 <c:forEach items="#{chat.conversations}" var="ch">
                                     <div >
                                         <p:commandLink value="#{ch.title}" >
-                                            <f:ajax listener="#{chat.grabChat(ch.id)}" />
+                                            <f:ajax listener="#{chat.grabChat(ch.id)}" update="messagesList"></f:ajax>
                                         </p:commandLink>
                                     </div>
                                 </c:forEach>
@@ -66,22 +66,34 @@
 
                     <div style="text-align: right">
                         <h:form>
-                        <p:panelGrid styleClass="" columns="1">
-                            <p:row>
-                                <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
-                                    <p:outputLabel style="margin: 2px" value="Hejsan!" />
-                                </div>
-                                <div style="text-align: left; margin: 5px 0px 5px 0px;background-color: pink">
-                                    <p:outputLabel style="margin: 2px" value="Hej... :)"/>
-                                </div>
-                            </p:row>
+                        <p:panelGrid id="messagesList" styleClass="" columns="1">
+                            <c:forEach  items="#{chat.conversation.messages}" var="msg">
+                                <p:row>
+                                    <p:outputLabel style="margin: 2px" value="#{msg.text}" />
+                                    <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
+                                        <p:outputLabel style="margin: 2px" value="#{msg.text}" />
+                                    </div>
+
+                                    <c:if test="#{msg.sender.id == chat.me.id}">
+                                        <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
+                                            <p:outputLabel style="margin: 2px" value="#{msg.text}" />
+                                        </div>
+                                    </c:if>
+                                    <c:if test="#{ msg.sender.id != chat.me.id}">
+                                        <div style="text-align: left; margin: 5px 0px 5px 0px;background-color: pink">
+                                            <p:outputLabel style="margin: 2px" value="#{msg.text}"/>
+                                        </div>
+                                    </c:if>
+
+                                </p:row>
+                            </c:forEach>
                             <p:separator />
                             <p:row>
                                 <div>
-                                    <p:inputText style="border-style: none; margin-right: 10px;" placeholder="Type here..." value="#{post.message}" >
+                                    <p:inputText style="border-style: none; margin-right: 10px;" placeholder="Type here..." value="#{chat.messageFromInput}" >
                                         <f:validateLength minimum="1" maximum="512" />
                                     </p:inputText>
-                                    <p:commandButton  value="Send"/>
+                                    <p:commandButton action="#{chat.sendMessage}"  value="Send"/>
                                 </div>
                             </p:row>
                         </p:panelGrid>
