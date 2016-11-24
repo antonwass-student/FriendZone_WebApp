@@ -43,7 +43,7 @@ public class ConversationService {
 
             UsrEntity user = query.getSingleResult();
 
-            if(conversation.getMessagesByConversationId().contains(user)){
+            if(conversation.getMembers().contains(user)){
 
                 List<MessageBO> messages = new ArrayList();
 
@@ -207,7 +207,6 @@ public class ConversationService {
         }finally {
             em.close();
         }
-
     }
 
 
