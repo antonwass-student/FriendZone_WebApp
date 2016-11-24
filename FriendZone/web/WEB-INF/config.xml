@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config>
+    <webservices>
+        <chat-api value="http://localhost:8080"/>
+        <friend-api value="http://localhost:8080"/>
+    </webservices>
+</config>
