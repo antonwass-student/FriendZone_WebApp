@@ -66,3 +66,22 @@
     margin: -135px 0px 0px 270px;
 
 }
+
+.msgBubbleOther{
+    text-align: left;
+    float: left;
+    margin: 5px 0px 5px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: pink;
+    display: inline-block;
+}
+.msgBubbleMe{
+    text-align: right;
+    margin: 5px 0px 5px 0px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: lightskyblue;
+    display: inline-block;
+
+}

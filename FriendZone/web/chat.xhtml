@@ -9,6 +9,7 @@
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <h:head>
     <link rel="stylesheet" type="text/css" href="main.css"/>
+    <h:outputScript name="websocket_test.js"/>
 </h:head>
 <h:body style="background-color: #e9ebee">
     <f:view>
@@ -41,23 +42,23 @@
     </f:view>
 
     <div class="page_wrapper_content">
-        <p:outputLabel value="Creat new chat" />
+        <h:form>
         <p:panelGrid style="width: 600px;height: auto" styleClass="panelGridCenter" columns="2">
                 <p:row>
                     <div style="text-align: left">
                         <p:panelGrid styleClass="" columns="1">
-                            <h:form>
+                            <div id="sid"></div>
                                 <p:commandButton  value="Create new chat" action="new_chat?faces-redirect=true"/>
-                            </h:form>
-                            <h:form>
+                                <p:separator />
+
                                 <c:forEach items="#{chat.conversations}" var="ch">
                                     <div >
                                         <p:commandLink value="#{ch.title}" >
-                                            <f:ajax listener="#{chat.grabChat(ch.id)}" update="messagesList"></f:ajax>
+                                            <p:ajax listener="#{chat.grabChat(ch.id)}" update="messagesList"></p:ajax>
                                         </p:commandLink>
                                     </div>
+                                    <p:separator />
                                 </c:forEach>
-                            </h:form>
                         </p:panelGrid>
                     </div>
                 </p:row>
@@ -65,43 +66,46 @@
                 <p:row>
 
                     <div style="text-align: right">
-                        <h:form>
-                        <p:panelGrid id="messagesList" styleClass="" columns="1">
-                            <c:forEach  items="#{chat.conversation.messages}" var="msg">
+
+                        <p:panelGrid id="messagesList" columns="1">
+
+                            <c:forEach items="#{chat.conversation.messages}" var="msg">
                                 <p:row>
-                                    <p:outputLabel style="margin: 2px" value="#{msg.text}" />
-                                    <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
-                                        <p:outputLabel style="margin: 2px" value="#{msg.text}" />
-                                    </div>
 
                                     <c:if test="#{msg.sender.id == chat.me.id}">
-                                        <div style="text-align: right; margin: 5px 0px 5px 0px; background-color: lightskyblue">
-                                            <p:outputLabel style="margin: 2px" value="#{msg.text}" />
+                                        <div class="msgBubbleMe">
+                                            <p:outputLabel style="padding: 10px;" value="#{msg.text}" />
                                         </div>
                                     </c:if>
+
                                     <c:if test="#{ msg.sender.id != chat.me.id}">
-                                        <div style="text-align: left; margin: 5px 0px 5px 0px;background-color: pink">
+                                        <div style="text-align: left;padding-left: 3px;color: darkgray;">
+                                            <p:outputLabel value="#{msg.sender.name} "/>
+                                        </div>
+
+                                        <div  class="msgBubbleOther">
                                             <p:outputLabel style="margin: 2px" value="#{msg.text}"/>
                                         </div>
                                     </c:if>
 
                                 </p:row>
                             </c:forEach>
+                            <div id="directMsg"></div>
                             <p:separator />
                             <p:row>
                                 <div>
                                     <p:inputText style="border-style: none; margin-right: 10px;" placeholder="Type here..." value="#{chat.messageFromInput}" >
                                         <f:validateLength minimum="1" maximum="512" />
                                     </p:inputText>
-                                    <p:commandButton action="#{chat.sendMessage}"  value="Send"/>
+                                    <p:commandButton action="#{chat.sendMessage}"  value="Send">
+                                    </p:commandButton>
                                 </div>
                             </p:row>
                         </p:panelGrid>
-                    </h:form>
                     </div>
                 </p:row>
         </p:panelGrid>
-
+        </h:form>
     </div>
 
 </h:body>

@@ -20,17 +20,26 @@ import java.util.Collection;
  * Created by chris on 2016-11-23.
  */
 @ManagedBean(name = "chat")
-@SessionScoped
+@ViewScoped
 public class ChatBean {
     private Collection<ConversationBO> conversations;
     private ConversationMessagesBO conversation;
     private UserSmallBO me;
     private int activeConversationId;
     private String messageFromInput;
+    private String uid;
 
     public ChatBean() {
         getConversationsOfUser();
         getLoggedInUser();
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getMessageFromInput() {
@@ -98,6 +107,16 @@ public class ChatBean {
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         ConversationListBO list = response.getEntity(ConversationListBO.class);
         conversations = list.getConvos();
+
+        for (ConversationBO con : conversations){
+            String name = "";
+            for (UserSmallBO usr : con.getMembers()){
+                name += usr.getName() + ", ";
+            }
+            name = name.substring(0,name.lastIndexOf(","));
+            con.setTitle(name);
+        }
+
         return "";
     }
     public void getLoggedInUser(){
@@ -136,6 +155,10 @@ public class ChatBean {
         msg.setText(messageFromInput);
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).post(ClientResponse.class,msg);
         System.out.println("Send response: "+response.getStatus());
+        MessageSentResponseBO resp = response.getEntity(MessageSentResponseBO.class);
+        System.out.println();
+        Push.sendToSessions(resp,messageFromInput);
+        messageFromInput = "";
 
     }
 

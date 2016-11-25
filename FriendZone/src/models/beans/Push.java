@@ -34,12 +34,6 @@ public class Push {
 
 
         SESSIONS.put(sessionId, session);
-
-        try{
-            session.getBasicRemote().sendText("Connection established");
-        }catch(Exception e){
-            e.printStackTrace();
-        }
     }
 
     @OnClose
@@ -57,7 +51,7 @@ public class Push {
         synchronized(SESSIONS){
             for(String s : convData.getSession_ids_in_convo()){
                 try{
-                    SESSIONS.get(s).getBasicRemote().sendText(convData.getSender().getName() + ": " + text);
+                    SESSIONS.get(s).getBasicRemote().sendText(text);
                 }catch(Exception e){
                     e.printStackTrace();
                 }
