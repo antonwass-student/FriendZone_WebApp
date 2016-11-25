@@ -2,31 +2,38 @@ package models.beans;
 
 import bo.MessageSentResponseBO;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.servlet.http.HttpSession;
+import javax.websocket.*;
+import javax.websocket.server.HandshakeRequest;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import javax.websocket.server.ServerEndpointConfig;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Anton on 2016-11-23.
  */
-@ServerEndpoint("/rtchat/{clientId}")
+@ServerEndpoint(value="/rtchat", configurator = ServletAwareConfig.class)
 public class Push {
 
     private static final ConcurrentHashMap<String, Session> SESSIONS = new ConcurrentHashMap();
 
-    private volatile String clientId;
+
+    private EndpointConfig config;
+
+    private String sessionId;
 
     @OnOpen
-    public void onOpen(@PathParam("clientId")String clientId, Session session){
+    public void onOpen(Session session, EndpointConfig config){
+        this.config = config;
+        sessionId = config.getUserProperties().get("sessionId").toString();
+
+
         System.out.println(session.getId() + " has opened a connection.");
 
-        this.clientId = clientId;
 
-        SESSIONS.put(clientId, session);
+
+        SESSIONS.put(sessionId, session);
 
         try{
             session.getBasicRemote().sendText("Connection established");
@@ -37,7 +44,7 @@ public class Push {
 
     @OnClose
     public void onClose(Session session){
-        SESSIONS.remove(clientId);
+        SESSIONS.remove(sessionId);
     }
 
     @OnMessage
@@ -58,3 +65,4 @@ public class Push {
         }
     }
 }
+

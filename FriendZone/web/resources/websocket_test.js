@@ -1,5 +1,5 @@
 if (window.WebSocket) {
-    var ws = new WebSocket("ws://localhost:8080/echo");
+    var ws = new WebSocket("ws://localhost:8080/rtchat");
 
 
 
