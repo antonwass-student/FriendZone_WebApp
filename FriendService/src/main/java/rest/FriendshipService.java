@@ -8,6 +8,7 @@ import main.java.util.EntityManagerHelper;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -202,6 +203,19 @@ public class FriendshipService {
 
             UserEntity user = query.getSingleResult();
 
+            Query query2 =
+                    em.createQuery("DELETE FriendshipEntity WHERE userByInviter.id = :id1 AND userByReceiver.id = :id2", FriendshipEntity.class);
+
+            query2.setParameter("id1", friendNoMore.getFriendshipId());
+            query2.setParameter("id2", user.getUserId());
+
+            query2.executeUpdate();
+
+            query2.setParameter("id1", user.getUserId());
+            query2.setParameter("id2", friendNoMore.getFriendshipId());
+
+            query2.executeUpdate();
+
             FriendshipEntity friendship = em.find(FriendshipEntity.class, friendNoMore.getFriendshipId());
 
             if(friendship.getUserByInviter().getUserId() == user.getUserId() ||
@@ -213,8 +227,6 @@ public class FriendshipService {
             }else{
                 return "User is not part of friendship.";
             }
-
-
 
         }catch(Exception e){
             e.printStackTrace();
