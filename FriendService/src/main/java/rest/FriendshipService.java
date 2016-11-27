@@ -33,6 +33,7 @@ public class FriendshipService {
             UserEntity user = query.getSingleResult();
             Collection<UserSmallBO> friends = new ArrayList<>();
             Collection<FriendshipEntity> friendships = user.getFriendshipsByUserId();
+            friendships.addAll(user.getFriendshipsByUserId_0());
             for(FriendshipEntity fe : friendships){
                 UserSmallBO u = new UserSmallBO();
                 if (user.getUserId() == fe.getUserByInviter().getUserId()){
@@ -203,30 +204,23 @@ public class FriendshipService {
 
             UserEntity user = query.getSingleResult();
 
-            Query query2 =
-                    em.createQuery("DELETE FriendshipEntity WHERE userByInviter.id = :id1 AND userByReceiver.id = :id2", FriendshipEntity.class);
+            TypedQuery<FriendshipEntity> query2 =
+                    em.createQuery("FROM FriendshipEntity WHERE (userByInviter.id = :id1 AND userByReceiver.id = :id2) " +
+                                    "OR (userByInviter.id = :id2 AND userByReceiver.id = :id1)"
+                    ,FriendshipEntity.class);
 
             query2.setParameter("id1", friendNoMore.getFriendshipId());
             query2.setParameter("id2", user.getUserId());
 
-            query2.executeUpdate();
+            FriendshipEntity friendship = query2.getSingleResult();
 
-            query2.setParameter("id1", user.getUserId());
-            query2.setParameter("id2", friendNoMore.getFriendshipId());
+            em.getTransaction().begin();
+            em.remove(friendship);
+            em.getTransaction().commit();
 
-            query2.executeUpdate();
 
-            FriendshipEntity friendship = em.find(FriendshipEntity.class, friendNoMore.getFriendshipId());
+            return "Friendship removed.";
 
-            if(friendship.getUserByInviter().getUserId() == user.getUserId() ||
-                    friendship.getUserByReceiver().getUserId() == user.getUserId()){
-                em.getTransaction().begin();
-                em.remove(friendship);
-                em.getTransaction().commit();
-                return "Friendship removed.";
-            }else{
-                return "User is not part of friendship.";
-            }
 
         }catch(Exception e){
             e.printStackTrace();

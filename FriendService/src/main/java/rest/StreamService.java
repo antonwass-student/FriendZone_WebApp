@@ -70,12 +70,22 @@ public class StreamService {
         TypedQuery<WallPostEntity> postQuery = em.createQuery(cq);
 
         //execute query
+        Collection<WallPostEntity> posts = new ArrayList();
 
-        Collection<WallPostEntity> posts = postQuery.getResultList();
+        try{
+            posts = postQuery.getResultList();
+        }catch(Exception e){
+            System.out.println("No friends.");
+        }
+
 
         StreamGetResponseBO response = new StreamGetResponseBO();
 
         ArrayList<WallPostBO> postBOs = new ArrayList<>();
+
+        if(posts== null){
+            posts = new ArrayList();
+        }
 
         for(WallPostEntity p : posts){
             WallPostBO wp = new WallPostBO();

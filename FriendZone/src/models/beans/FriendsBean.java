@@ -61,12 +61,12 @@ public class FriendsBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/friends/delete/");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/remove");
 
         FriendshipDeleteBO fdel = new FriendshipDeleteBO();
         fdel.setUser_session_id(sid);
         fdel.setFriendshipId(userIdToRemove);
-        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).post(ClientResponse.class,fdel);
+        ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN).type(MediaType.APPLICATION_JSON).post(ClientResponse.class,fdel);
         System.out.println("HTTP status: " + response.getStatus());
     }
 }
