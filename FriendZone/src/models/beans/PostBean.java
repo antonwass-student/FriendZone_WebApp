@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -53,7 +54,7 @@ public class PostBean
 
         String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/wall/post");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/wall/post");
         WallPostNewBO post = new WallPostNewBO();
         post.setMessage(message);
         post.setPicture(picture);

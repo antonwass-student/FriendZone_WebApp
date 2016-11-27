@@ -10,6 +10,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 import javafx.event.ActionEvent;
 
 import javax.faces.bean.*;
@@ -104,7 +105,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource("http://localhost:8080/api/user/get/"+id);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/get/"+id);
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
@@ -125,7 +126,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource("http://localhost:8080/api/wall/get/"+id);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/wall/get/"+id);
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
@@ -141,7 +142,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource("http://localhost:8080/api/user/get/session/"+FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/get/session/"+FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 

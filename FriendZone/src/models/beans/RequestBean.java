@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -37,7 +38,7 @@ public class RequestBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/friend/request/send");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/request/send");
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, request);
 

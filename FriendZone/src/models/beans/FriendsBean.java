@@ -1,6 +1,7 @@
 package models.beans;
 
 import bo.FriendRequestBO;
+import bo.FriendshipDeleteBO;
 import bo.UserSmallBO;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -9,6 +10,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
@@ -47,9 +49,24 @@ public class FriendsBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource("http://localhost:8080/api/friend/friends/get/"+sid);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/friends/get/"+sid);
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         friends = response.getEntity(new GenericType<Collection<UserSmallBO>>(){});
         noOfFriends = friends.size();
+    }
+
+    public void removeFriend(int userIdToRemove){
+        ClientConfig clientConfig = new DefaultClientConfig();
+        clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+
+        Client c = Client.create(clientConfig);
+        String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/friends/delete/");
+
+        FriendshipDeleteBO fdel = new FriendshipDeleteBO();
+        fdel.setUser_session_id(sid);
+        fdel.setFriendshipId(userIdToRemove);
+        ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).post(ClientResponse.class,fdel);
+        System.out.println("HTTP status: " + response.getStatus());
     }
 }

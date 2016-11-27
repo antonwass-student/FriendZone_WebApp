@@ -16,6 +16,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 import java.io.IOException;
 
@@ -77,7 +78,7 @@ public class LoginBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/user/login");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/login");
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, user);
@@ -112,7 +113,7 @@ public class LoginBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/user/logout/"+sessionId);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/logout/"+sessionId);
 
         ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN)
                 .post(ClientResponse.class);
