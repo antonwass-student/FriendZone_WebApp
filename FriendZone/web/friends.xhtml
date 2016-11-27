@@ -49,6 +49,9 @@
                     <f:param name="userId" value="#{fr.id}" />
                 </p:link>
             </p:column>
+            <p:column>
+                <p:commandButton icon="fa fa-times" style="color: red;" action="#{friends.removeFriend(fr.id)}" />
+            </p:column>
         </p:dataTable>
 
     </div>

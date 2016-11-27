@@ -7,6 +7,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 
 import javax.faces.bean.ManagedBean;
@@ -76,7 +77,7 @@ public class RegisterBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/user/register");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/register");
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, user);

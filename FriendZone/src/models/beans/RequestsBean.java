@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.json.JSONConfiguration;
+import config.FriendConfig;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -41,7 +42,7 @@ public class RequestsBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource("http://localhost:8080/api/friend/request/get/"+sid);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/request/get/"+sid);
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         requests = response.getEntity(new GenericType<Collection<FriendRequestBO>>(){});
     }
@@ -60,7 +61,7 @@ public class RequestsBean {
         decision.setReceiver_session_id(sid);
         decision.setRequest_id(reqId);
 
-        WebResource webResource = c.resource("http://localhost:8080/api/friend/request/decision");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/request/decision");
         ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, decision);
 
