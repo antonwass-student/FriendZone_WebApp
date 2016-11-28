@@ -41,7 +41,7 @@
     </f:view>
 
     <div class="page_wrapper_content">
-
+        <h:form>
         <p:dataTable id="results" value="#{requests.requests}" var="fr" border="1">
 
                 <p:column>
@@ -51,11 +51,12 @@
                     <p:outputLabel value="#{fr.message}" />
                 </p:column>
                 <p:column>
-                    <p:commandButton icon="fa fa-check" action="#{requests.answerFriendRequest(fr.id,true)}" />
-                    <p:commandButton icon="fa fa-times" action="#{requests.answerFriendRequest(fr.id,false)}" />
+                    <p:commandButton update="results" icon="fa fa-check" action="#{requests.answerFriendRequest(fr.id,true)}" />
+                    <p:commandButton update="results" icon="fa fa-times" action="#{requests.answerFriendRequest(fr.id,false)}" />
                 </p:column>
-        </p:dataTable>
 
+        </p:dataTable>
+</h:form>
     </div>
 
 </h:body>
