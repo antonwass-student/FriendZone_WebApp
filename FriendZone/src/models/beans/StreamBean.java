@@ -40,7 +40,7 @@ public class StreamBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/stream/load");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/stream/load");
 
         StreamGetRequestBO streamRequest = new StreamGetRequestBO();
         streamRequest.setUserSessionId(sid);

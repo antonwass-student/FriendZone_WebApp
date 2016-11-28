@@ -49,7 +49,7 @@ public class FriendsBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/friends/get/"+sid);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/friend/friends/get/"+sid);
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         friends = response.getEntity(new GenericType<Collection<UserSmallBO>>(){});
         noOfFriends = friends.size();
@@ -61,7 +61,7 @@ public class FriendsBean {
 
         Client c = Client.create(clientConfig);
         String sid = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/remove");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/friend/remove");
 
         FriendshipDeleteBO fdel = new FriendshipDeleteBO();
         fdel.setUser_session_id(sid);

@@ -77,7 +77,7 @@ public class RegisterBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/register");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/register");
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, user);

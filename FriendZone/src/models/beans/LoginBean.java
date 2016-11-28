@@ -78,7 +78,7 @@ public class LoginBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/login");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/login");
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, user);
@@ -113,7 +113,7 @@ public class LoginBean {
 
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/logout/"+sessionId);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/logout/"+sessionId);
 
         ClientResponse response = webResource.accept(MediaType.TEXT_PLAIN)
                 .post(ClientResponse.class);

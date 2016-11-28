@@ -72,7 +72,7 @@ public class UserBean {
         Client c = Client.create(clientConfig);
 
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/get/all");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/get/all");
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON).get(ClientResponse.class);
         Collection<UserSmallBO> usrs = response.getEntity(new GenericType<Collection<UserSmallBO>>(){});
 

@@ -54,7 +54,7 @@ public class PostBean
 
         String sessionId = FacesContext.getCurrentInstance().getExternalContext().getSessionId(false);
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/wall/post");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/wall/post");
         WallPostNewBO post = new WallPostNewBO();
         post.setMessage(message);
         post.setPicture(picture);

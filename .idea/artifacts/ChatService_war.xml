@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="ChatService:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/ChatService_war</output-path>
+    <root id="archive" name="ChatService_war.war">
+      <element id="artifact" artifact-name="ChatService:war exploded" />
+    </root>
+  </artifact>
+</component>

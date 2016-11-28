@@ -1,5 +1,5 @@
 if (window.WebSocket) {
-    var ws = new WebSocket("ws://localhost:8080/rtchat");
+    var ws = new WebSocket("ws://172.16.83.65:8080/FriendZone/rtchat");
 
     ws.onmessage = function(event) {
         var text = event.data;
@@ -23,5 +23,5 @@ function createMsgBubble(text) {
     msgDiv.className = 'msgBubbleOther';
     msgDiv.innerHTML = text;
     document.getElementById("directMsg").appendChild(msgDiv);
-
+    document.getElementById("directMsg").appendChild(document.createElement('br'));
 }

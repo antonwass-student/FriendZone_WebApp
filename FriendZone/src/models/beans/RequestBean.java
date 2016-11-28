@@ -38,7 +38,7 @@ public class RequestBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
         Client c = Client.create(clientConfig);
 
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/friend/request/send");
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/friend/request/send");
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).type(MediaType.APPLICATION_JSON)
                 .post(ClientResponse.class, request);
 

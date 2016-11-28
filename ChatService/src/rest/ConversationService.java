@@ -177,6 +177,10 @@ public class ConversationService {
 
             UsrEntity user = query.getSingleResult();
 
+            //change the logged in session id to tomcat server 2
+
+            user.setSessionId(user.getSessionId().substring(0, user.getSessionId().length()-1) + "2");
+
             ConversationListBO conversationList = new ConversationListBO();
             Collection<ConversationBO> conversations = new ArrayList();
 

@@ -105,7 +105,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/get/"+id);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/get/"+id);
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
@@ -126,7 +126,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/wall/get/"+id);
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/wall/get/"+id);
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
@@ -142,7 +142,7 @@ public class ProfileBean {
         clientConfig.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
 
         Client c = Client.create(clientConfig);
-        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/api/user/get/session/"+FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
+        WebResource webResource = c.resource(FriendConfig.getFriendApiUrl() + "/user/get/session/"+FacesContext.getCurrentInstance().getExternalContext().getSessionId(false));
 
         ClientResponse response = webResource.accept(MediaType.APPLICATION_JSON).get(ClientResponse.class);
 
