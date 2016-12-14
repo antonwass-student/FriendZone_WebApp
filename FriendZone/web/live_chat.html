@@ -12,15 +12,15 @@
     <div ng-app="myApp" ng-controller="chatWindow">
         <div>
             <form id="chat">
-                <div ng-repeat="chat in chats">
+                <button type="submit" value="{{connectTo}}"></button>
+                <div ng-repeat="chat in conversations">
                     <fieldset>
                         <legend>{{chat.name}} - id: {{chat.id}}</legend>
                         <table>
-                            <tr  ng-repeat="message in chat.messages">
-                                <td>Message id: {{message.id}}</td>
-                                <td>{{message.body}}</td>
-                                <br />
+                            <tr id="msg" ng-repeat="message in chat.messages">
                                 <td>from: {{message.sender}}</td>
+                                <td>{{message.message}}</td>
+                                <br />
                             </tr>
                         </table>
                     </fieldset>
@@ -44,24 +44,98 @@
     var app = angular.module('myApp', []);
 
     app.controller('chatWindow', function($scope){
-        $scope.websocket = "ws//:localhost:8082/"
-        $scope.chats = [
-            {
-                id: "1",
-                name: 'Chat 1',
-                messages : [
-                    {id: "1", body: "Hejsan", sender: "user"},{id: "2", body: "Bajs", sender: "user"}
-                ]
-            },
-            {
-                id: "2",
-                name: 'Chat 2',
-                messages : [
-                    {id: "1", body: "En annan chat", sender: "user"},{id: "2", body: "chattiriatiriiririri", sender: "user"}
-                ]
+        $scope.websocket = null;
+        $scope.userId = null
+        $scope.friends = [];
+        $scope.conversations = []
 
+        $scope.connectTo = function(socket) {
+            websocket = new WebSocket("ws://127.0.0.1:8090/");
+            websocket.onopen = $scope.onConnect
+            websocket.onmessage = $scope.onMessage
+            console.log("connected!");
+        }
+
+        $scope.onConnect = function () {
+            $scope.getConversations
+            $scope.getFriends
+        }
+        
+        $scope.send = function (message) {
+            var jsonMsg = {
+                type: "message",
+                id: "1",
+                message: message,
+                sender:$scope.userId
+            };
+            $scope.websocket.send(JSON.stringify(jsonMsg))
+        }
+        
+        $scope.onMessage = function (evt) {
+            var msg = JSON.parse(evt.data);
+            console.log(msg.type);
+            switch (msg.type) {
+                case 'openConversation':
+                    console.log('type = openConversation');
+                    // Append message to correct conversation.
+                case 'message':
+                    var newMessage = $('<td>'+msg.sender+':</td><td>'+msg.message+'</td><br />')
+                    $('#msg').appendChild(newMessage)
+                case 'conversation':
+                    console.log('type = conversation')
+                    $scope.conversations = msg.conversations;
+                case 'friends':
+                    console.log('type = friends')
+                    $scope.friends = msg.friends;
+                default:
+                    console.log("default... we don't know how to handle this...")
             }
-        ]
+        }
+
+        $scope.getFriends = function () {
+            var jsonMsg = {type:'friends',id:$scope.userId}
+            $scope.websocket.send(JSON.stringify(jsonMsg));
+        }
+
+        $scope.getConversations = function () {
+            var jsonMsg = {type: 'conversation', id: $scope.userId}
+            $scope.websocket.send(JSON.stringify(jsonMsg));
+        }
+
+        $scope.getMessagesFrom = function (conversationId) {
+            var jsonMsg = {
+                type: 'openConversation',
+                id: conversationId
+            }
+            $scope.websocket.send(JSON.stringify(jsonMsg));
+        }
+
+        $scope.createConversation = function (who) {
+            var jsonMsg = {
+                type: 'new',
+                name: 'Chatnamn!',
+                sender: $scope.userId,
+                invited: who
+            }
+            $scope.websocket.send(JSON.stringify(jsonMsg));
+        }
+
+        $scope.inviteToConversation = function (convId,who) {
+            var jsonMsg = {
+                type: 'invited',
+                convId: convId,
+                sender: $scope.userId,
+                who: who
+            }
+            $scope.websocket.send(JSON.stringify(jsonMsg));
+        }
+
+        // On ready
+        angular.element(document).ready(function () {
+            $scope.userId = 'Sätt id!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+        });
+
+
     });
 
 </script>
