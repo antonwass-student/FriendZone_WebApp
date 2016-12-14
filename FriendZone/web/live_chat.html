@@ -56,9 +56,9 @@
             console.log("connected!");
         }
 
-        $scope.onConnect = function () {
-            $scope.getConversations
-            $scope.getFriends
+        $scope.onConnect = function (event) {
+            $scope.getConversations()
+            $scope.getFriends()
         }
         
         $scope.send = function (message) {
