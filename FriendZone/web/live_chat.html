@@ -4,14 +4,38 @@
     <meta charset="UTF-8">
     <title>Chat</title>
 
-    <script src="node_modules/angular/angular.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
 
 </head>
 
 <body>
-    <div ng-app="myApp" ng-controller="myController">
-        <div></div>
-        {{testData}}
+    <div ng-app="myApp" ng-controller="chatWindow">
+        <div>
+            <form id="chat">
+                <div ng-repeat="chat in chats">
+                    <fieldset>
+                        <legend>{{chat.name}} - id: {{chat.id}}</legend>
+                        <table>
+                            <tr  ng-repeat="message in chat.messages">
+                                <td>Message id: {{message.id}}</td>
+                                <td>{{message.body}}</td>
+                                <br />
+                                <td>from: {{message.sender}}</td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </div>
+
+                <fieldset>
+                    <legend>Enter message...</legend>
+                    <div>
+                        <input type="text" placeholder="Your message..." id="inField"/>
+                        <input type="submit" value="Send!" />
+                    </div>
+                </fieldset>
+            </form>
+
+        </div>
     </div>
 </body>
 
@@ -19,10 +43,25 @@
 
     var app = angular.module('myApp', []);
 
-    app.controller('myController', function($scope){
+    app.controller('chatWindow', function($scope){
+        $scope.websocket = "ws//:localhost:8082/"
+        $scope.chats = [
+            {
+                id: "1",
+                name: 'Chat 1',
+                messages : [
+                    {id: "1", body: "Hejsan", sender: "user"},{id: "2", body: "Bajs", sender: "user"}
+                ]
+            },
+            {
+                id: "2",
+                name: 'Chat 2',
+                messages : [
+                    {id: "1", body: "En annan chat", sender: "user"},{id: "2", body: "chattiriatiriiririri", sender: "user"}
+                ]
 
-        $scope.testData = "test";
-
+            }
+        ]
     });
 
 </script>
