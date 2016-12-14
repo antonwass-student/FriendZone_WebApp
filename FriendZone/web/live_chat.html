@@ -12,7 +12,9 @@
     <div ng-app="myApp" ng-controller="chatWindow">
         <div>
             <form id="chat">
-                <button type="submit" value="{{connectTo}}"></button>
+                <button type="submit" value="{{connectTo()}}">Connect!</button>
+                <button type="submit" value="{{disconnect}}">Disconnect!</button>
+
                 <div ng-repeat="chat in conversations">
                     <fieldset>
                         <legend>{{chat.name}} - id: {{chat.id}}</legend>
@@ -49,13 +51,18 @@
         $scope.friends = [];
         $scope.conversations = []
 
-        $scope.connectTo = function(socket) {
-            websocket = new WebSocket("ws://127.0.0.1:8090/");
+        $scope.connectTo = function() {
+            console.log("connecting...");
+            websocket = new WebSocket("ws://localhost:8090/");
             websocket.onopen = $scope.onConnect
+            websocket.onclose = $scope.onClose
             websocket.onmessage = $scope.onMessage
             console.log("connected!");
         }
 
+        $scope.onClose = function (event) {
+            $scope.websocket.close()
+        }
         $scope.onConnect = function (event) {
             $scope.getConversations()
             $scope.getFriends()
@@ -110,10 +117,10 @@
             $scope.websocket.send(JSON.stringify(jsonMsg));
         }
 
-        $scope.createConversation = function (who) {
+        $scope.createConversation = function (name,who) {
             var jsonMsg = {
                 type: 'new',
-                name: 'Chatnamn!',
+                name: name,
                 sender: $scope.userId,
                 invited: who
             }
@@ -132,7 +139,7 @@
 
         // On ready
         angular.element(document).ready(function () {
-            $scope.userId = 'Sätt id!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'
+            $scope.userId = '1' // SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
 
 
