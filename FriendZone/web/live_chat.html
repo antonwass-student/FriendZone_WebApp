@@ -46,26 +46,28 @@
     var app = angular.module('myApp', []);
 
     app.controller('chatWindow', function($scope){
-        $scope.websocket = null;
-        $scope.userId = null
+        $scope.websocket;
+        $scope.userId = 1
         $scope.friends = [];
         $scope.conversations = []
 
         $scope.connectTo = function() {
             console.log("connecting...");
-            websocket = new WebSocket("ws://localhost:8090/");
-            websocket.onopen = $scope.onConnect
-            websocket.onclose = $scope.onClose
-            websocket.onmessage = $scope.onMessage
+            $scope.websocket = new WebSocket("ws://localhost:8090");
+            $scope.websocket.onmessage = $scope.onMessage
+            $scope.websocket.onopen = $scope.onConnect
+            $scope.websocket.onclose = $scope.onClose
+
             console.log("connected!");
         }
 
         $scope.onClose = function (event) {
             $scope.websocket.close()
         }
+
         $scope.onConnect = function (event) {
             $scope.getConversations()
-            $scope.getFriends()
+            //$scope.getFriends()
         }
         
         $scope.send = function (message) {
@@ -79,6 +81,7 @@
         }
         
         $scope.onMessage = function (evt) {
+            console.log('message incoming!!!!!!!!!!!!!!!!!!!')
             var msg = JSON.parse(evt.data);
             console.log(msg.type);
             switch (msg.type) {
@@ -87,10 +90,11 @@
                     // Append message to correct conversation.
                 case 'message':
                     var newMessage = $('<td>'+msg.sender+':</td><td>'+msg.message+'</td><br />')
-                    $('#msg').appendChild(newMessage)
-                case 'conversation':
+                    //$('#msg').append(newMessage)
+                case 'conversations':
                     console.log('type = conversation')
                     $scope.conversations = msg.conversations;
+
                 case 'friends':
                     console.log('type = friends')
                     $scope.friends = msg.friends;
@@ -105,7 +109,7 @@
         }
 
         $scope.getConversations = function () {
-            var jsonMsg = {type: 'conversation', id: $scope.userId}
+            var jsonMsg = {type: 'conversations', user: $scope.userId}
             $scope.websocket.send(JSON.stringify(jsonMsg));
         }
 
@@ -136,11 +140,12 @@
             }
             $scope.websocket.send(JSON.stringify(jsonMsg));
         }
-
+        
         // On ready
         angular.element(document).ready(function () {
-            $scope.userId = '1' // SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            $scope.userId = 1 // SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
+
 
 
     });
