@@ -13,8 +13,8 @@
 
 <body style="padding: 150px">
     <div ng-app="myApp" ng-controller="chatWindow" style="width: 800px; margin: auto; display: block;" class="page_wrapper_content">
-        Connect to <button class="btn btn-default" type="submit" ng-click="connectTo('ws://localhost:8090')">Vert.x-server</button>
-        Connect to <button class="btn btn-default" type="submit" ng-click="connectTo('ws://localhost:8091')">node.js-server</button>
+        Connect to <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://vertx.io/assets/logo-sm.png" ng-click="connectTo('ws://localhost:8090')" />
+        or <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://mirrors.hypo.cn/nodejs/v0.12.7/docs/images/logo-light.svg" ng-click="connectTo('ws://localhost:8091')" />
         <div class="row">
             <div style="position: fixed;bottom: 0px; right: 0px;">
                     <div  style="overflow-x: scroll;white-space: nowrap;">
@@ -36,10 +36,10 @@
                                                 <table style="width: inherit">
                                                     <tr ng-repeat="msg in c.messages" >
                                                         <td style="text-align: right;width: 300px">
-                                                            <div ng-if="msg.sender == userId" class="msgBubbleMe">
+                                                            <div ng-if="msg.user_id == userId" class="msgBubbleMe">
                                                                 <label style="margin: 2px" >{{msg.text}}</label>
                                                             </div>
-                                                            <div ng-if="msg.sender != userId" >
+                                                            <div ng-if="msg.user_id != userId" >
                                                                 <div style="text-align: left;margin-left: 3px; color: darkgray;">
                                                                     <label>{{msg.name}}</label>
                                                                 </div>
@@ -204,7 +204,7 @@
                             console.log('message content : ' + msg.message)
                             var name = $scope.getUserNameBy(msg.sender);
                             console.log('sender name = ' +name);
-                            item.messages.push({text:msg.message,sender: msg.sender, name: name });
+                            item.messages.push({text:msg.message,user_id: msg.sender, name: name });
                         }
                     });
                     $scope.$apply();
@@ -349,7 +349,7 @@
 
         // On ready
         angular.element(document).ready(function () {
-            $scope.userId = 3;// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            $scope.userId = 1;// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
     }]);
 
