@@ -16,34 +16,13 @@
         Connect to <button class="btn btn-default" type="submit" ng-click="connectTo('ws://localhost:8090')">Vert.x-server</button>
         Connect to <button class="btn btn-default" type="submit" ng-click="connectTo('ws://localhost:8091')">node.js-server</button>
         <div class="row">
-            <div>
-            Friends:
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Friends to invite!
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li ng-repeat="f in friends"><a href="" ng-click="appendFriendToNewConversation(f.user_id)">{{f.name}}</a></li>
-                    </ul>
-                </div>
-                Chat name:
-                <div class="input-group" style="width: 300px;">
-                    <input ng-model="newConv.name"  class="form-control" type="text" placeholder="Conversation name..." />
-                    <div class="input-group-btn">
-                        <input ng-click="createConversationBtnPressed()" class="btn btn-success" type="submit" value="Create conversation"/>
-                    </div>
-
-            </div>
-            <div >
-                <div style="position: fixed;bottom: 0px; right: 0px;">
-                    <div style="position: relative;overflow-x: scroll;white-space: nowrap">
+            <div style="position: fixed;bottom: 0px; right: 0px;">
+                    <div  style="overflow-x: scroll;white-space: nowrap;">
                         <div ng-repeat="c in conversations" style="display: inline-block;width: 300px;margin: 5px;background-color: aliceblue;">
                             <table ng-if="c.open == true">
                                 <tr>
                                     <td>
                                         <form id="chat">
-                                            <!--<input style="width: 300px;" class="btn btn-success" type="submit" value="{{c.namn}}" ng-click="closeConversation(c.conversation_id)" />-->
                                             <div ng-click="closeConversation(c.conversation_id)" style="width: 300px;background-color: lightgreen;height: 30px">
                                                 <div style="display: inline">
                                                         <div >
@@ -82,20 +61,54 @@
                                             </div>
                                         </form>
                                     </td>
-                                    <td>
-
-                                    </td>
                                 </tr>
                             </table>
                             <input ng-if="c.open == false" style="width: 100%;" class="btn btn-success" type="submit" value="{{c.namn}}" ng-click="getMessagesFrom(c.conversation_id)" />
                         </div>
+                        <div style="display: inline-block;width: 300px;margin: 5px;background-color: aliceblue;">
+                            <div >
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div style="width: 300px;background-color: lightgreen;height: 30px">
+                                                <div style="display: inline">
+                                                    <div >
+                                                        <label  style="text-align: left; margin: 7px">Skapa ny chat </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div style=" height: 250px;margin: 5px">
+                                                <div>
+                                                    Friends:
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                            Friends to invite!
+                                                            <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                            <li ng-repeat="f in friends"><a href="" ng-click="appendFriendToNewConversation(f.user_id)">{{f.name}}</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <label ng-repeat="u in usersToAdd">{{getUserNameBy(u)}},</label>
+                                                    </br>
+                                                    Chat name:
+                                                    <div class="input-group" style="width: 100%">
+                                                        <input ng-model="newConv.name"  class="form-control" type="text" placeholder="Conversation name..." />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input style="width: 100%" ng-click="createConversationBtnPressed()" class="btn btn-success" type="submit" value="Create conversation"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
             </div>
         </div>
-
-
+    </div>
     </div>
 </body>
 
@@ -111,6 +124,9 @@
             input:''
         };
         $scope.usersToAdd = []
+        $scope.testUsers = {
+            users: []
+        }
         $scope.newConvName = {
             name: ''
         };
@@ -162,14 +178,16 @@
             }
         };
 
-        function getNameBy(id) {
+        $scope.getUserNameBy = function(id) {
+            var name = '';
             $scope.friends.forEach(function (item, index) {
                 if (id == item.user_id){
-                    return item.name;
+                    var namn = item.name;
+                    name =  namn.toString();
                 }
             });
-            return 'Unknown'
-        }
+            return name;
+        };
 
         $scope.onMessage = function (evt) {
             console.log('message incoming!!!!!!!!!!!!!!!!!!!');
@@ -184,7 +202,7 @@
                     $scope.conversations.forEach(function (item,index) {
                         if (convId == item.conversation_id ){
                             console.log('message content : ' + msg.message)
-                            var name = getNameBy(msg.sender);
+                            var name = $scope.getUserNameBy(msg.sender);
                             console.log('sender name = ' +name);
                             item.messages.push({text:msg.message,sender: msg.sender, name: name });
                         }
@@ -233,6 +251,18 @@
                         }
                         $scope.friends.push(f);
                     });
+                    $scope.$apply();
+                    break;
+                case 'newConversation':
+                    var conv = msg.conversation;
+                    var c = {
+                        conversation_id:conv.conversation_id,
+                        namn:conv.namn,
+                        messages:[],
+                        open: false,
+                        input: ''
+                    };
+                    $scope.conversations.push(c);
                     $scope.$apply();
                     break;
                 default:
@@ -290,10 +320,12 @@
 
         $scope.appendFriendToNewConversation = function (friendId) {
             $scope.usersToAdd.push(friendId);
+            $scope.testUsers.users = $scope.usersToAdd
             console.log(friendId + 'was added to newConvList')
         };
 
         $scope.createConversation = function (name,who) {
+            who.push($scope.userId);
             var jsonMsg = {
                 type: 'new',
                 name: name,
@@ -319,9 +351,6 @@
         angular.element(document).ready(function () {
             $scope.userId = 3;// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
-
-
-
     }]);
 
 </script>
