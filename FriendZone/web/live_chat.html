@@ -349,7 +349,9 @@
 
         // On ready
         angular.element(document).ready(function () {
-            $scope.userId = 1;// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            var t = location.search.split('userId=')[1]
+            alert(t)
+            $scope.userId = parseInt(t);// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
     }]);
 
