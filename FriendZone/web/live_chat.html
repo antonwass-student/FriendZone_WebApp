@@ -13,8 +13,8 @@
 
 <body style="padding: 150px">
     <div ng-app="myApp" ng-controller="chatWindow" style="width: 800px; margin: auto; display: block;" class="page_wrapper_content">
-        Connect to <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://vertx.io/assets/logo-sm.png" ng-click="connectTo('ws://localhost:8090')" />
-        or <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://mirrors.hypo.cn/nodejs/v0.12.7/docs/images/logo-light.svg" ng-click="connectTo('ws://localhost:8091')" />
+        Connect to <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://vertx.io/assets/logo-sm.png" ng-click="connectTo('ws://localhost:8090', false)" />
+        or <input class="btn btn-lg btn-default" style="width: 275px;height: 75px" type="image" src="http://mirrors.hypo.cn/nodejs/v0.12.7/docs/images/logo-light.svg" ng-click="connectTo('ws://localhost:8091', true)" />
         <div class="row">
             <div style="position: fixed;bottom: 0px; right: 0px;">
                     <div  style="overflow-x: scroll;white-space: nowrap;">
@@ -132,13 +132,16 @@
         };
         $scope.conversations = [];
 
-        $scope.connectTo = function(address) {
+        $scope.connectTo = function(address, useProtocol) {
             if ($scope.websocket != null){
                 console.log('Socket already busy, closing socket...')
                 $scope.websocket.close();
             }
             console.log("connecting...");
-            $scope.websocket = new WebSocket(address);
+            if(useProtocol)
+                $scope.websocket = new WebSocket(address, 'live-chat');
+            else
+                $scope.websocket = new WebSocket(address);
             $scope.websocket.onopen = $scope.onConnect;
             $scope.websocket.onmessage = $scope.onMessage;
             $scope.websocket.onclose = $scope.onClose;
@@ -254,10 +257,10 @@
                     $scope.$apply();
                     break;
                 case 'newConversation':
-                    var conv = msg.conversation;
+
                     var c = {
-                        conversation_id:conv.conversation_id,
-                        namn:conv.namn,
+                        conversation_id:msg.conversation_id,
+                        namn:msg.namn,
                         messages:[],
                         open: false,
                         input: ''
@@ -350,7 +353,6 @@
         // On ready
         angular.element(document).ready(function () {
             var t = location.search.split('userId=')[1]
-            alert(t)
             $scope.userId = parseInt(t);// SÄTT ID!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         });
     }]);

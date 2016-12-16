@@ -21,13 +21,16 @@
                     </h:link>
                 </p:menuitem>
 
-
-
                 <p:menuitem value="Profile" icon="fa fa-user" outcome="/profile.xhtml" />
                 <p:menuitem value="Requests" icon="fa fa-users" outcome="/requests.xhtml" />
                 <p:menuitem value="Friends" icon="fa fa-users" outcome="/friends.xhtml" />
                 <p:menuitem value="Chat" icon="fa fa-comments" outcome="/chat.xhtml" />
                 <p:menuitem value="Search" icon="fa fa-search" outcome="/result.xhtml" />
+
+                <p:menuitem value="Live Chat" icon="fa fa-search">
+                    <a href="/live_chat.html?userId=#{chat.me.id}">Live Chat!</a>
+                </p:menuitem>
+
 
                 <f:facet name="options">
                     <p:autoComplete style="margin-right:10px" placeholder="Search" value="">

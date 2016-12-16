@@ -2,8 +2,8 @@
 <config>
     <webservices>
 
-        <chat-api value="http://172.16.83.65:8080/ChatService"/>
-        <friend-api value="http://172.16.83.64:8080/FriendService"/>
+        <chat-api value="http://localhost:8080/ChatService"/>
+        <friend-api value="http://localhost:8080/FriendService"/>
 
     </webservices>
 </config>
